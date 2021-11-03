@@ -1,4 +1,4 @@
-from .menu_entry import MenuEntry
+from models.menu_entry import MenuEntry
 
 
 class Menu:

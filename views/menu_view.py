@@ -3,13 +3,15 @@ from os import system
 
 
 class MenuView:
-    def __init__(self, menu):
+    def __init__(self, menu, title):
         self.menu = menu
+        self.title = title
 
     @property
     def display(self):
         system('clear')
         print(f"[{constants.TITLE}]\n")
+        print(f"{self.title}\n")
         for key, value in self.menu.entries.items():
             print(f"{key} : {value}")
 
