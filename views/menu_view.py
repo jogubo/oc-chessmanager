@@ -13,7 +13,7 @@ class MenuView:
         print(f"[{constants.TITLE}]\n")
         print(f"{self.title}\n")
         for key, value in self.menu.entries.items():
-            print(f"{key} : {value}")
+            print(f"[{key}] : {value}")
 
     @property
     def user_choice(self):

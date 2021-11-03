@@ -1,6 +1,6 @@
 class PlayersCtrl:
     def __init__(self):
-        pass
+        self.view = None
 
     def add_player(self):
         # nom
