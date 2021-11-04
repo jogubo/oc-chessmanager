@@ -39,16 +39,16 @@ class PlayerFormView:
             except IndexError:
                 continue
 
-    def sex(self):
+    def civility(self):
         while True:
             self.main_display()
             print("Entrez le sexe du joueur : [H]omme/[F]emme")
             _input = input('>> ').upper()
             if _input == "H":
-                self._sex = "Homme"
+                self._civility = "Homme"
                 break
             elif _input == "F":
-                self._sex = "Femme"
+                self._civility = "Femme"
                 break
             else:
                 continue
@@ -59,7 +59,7 @@ class PlayerFormView:
             self.first_name()
             self.last_name()
             self.birth()
-            self.sex()
+            self.civility()
             self.added(True)
         return
 
@@ -68,7 +68,7 @@ class PlayerFormView:
             validation = validate
             self.main_display()
             if validation is True:
-                print(f"{self._first_name} {self._last_name} [{self._sex}] "
+                print(f"{self._first_name} {self._last_name} [{self._civility}] "
                       f"({self._birth})\n\n"
                       "Les informations sont-elles correctes ? : [O]ui/[N]on")
                 _input = input('>> ').upper()
