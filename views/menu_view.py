@@ -1,5 +1,5 @@
 from utils import constants
-from os import system
+from utils import functions
 
 
 class MenuView:
@@ -9,7 +9,7 @@ class MenuView:
 
     @property
     def display(self):
-        system('clear')
+        functions.clear()
         print(f"[{constants.TITLE}]\n")
         print(f"{self.title}\n")
         for key, value in self.menu.entries.items():

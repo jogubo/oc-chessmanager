@@ -1,6 +1,7 @@
 from models import menu
 from views import menu_view
 from controllers import home_menu_ctrl
+from controllers import players_ctrl
 
 
 class PlayersMenuCtrl:
@@ -10,7 +11,7 @@ class PlayersMenuCtrl:
 
     def __call__(self):
         self.menu.add("auto", "Liste des joueurs", None)
-        self.menu.add("auto", "Ajouter un nouveau joueur", None)
+        self.menu.add("auto", "Ajouter un nouveau joueur", players_ctrl.PlayersCtrl())
         self.menu.add("auto", "Menu principal", home_menu_ctrl.HomeMenuCtrl())
         self.menu.add("Q", "Quitter", None)
 
