@@ -1,6 +1,6 @@
 from datetime import date
 from utils import constants
-from utils import functions
+from utils.functions import clear, prompt
 
 
 class PlayerFormView:
@@ -8,25 +8,22 @@ class PlayerFormView:
         self.title = title
 
     def main_display(self):
-        functions.clear()
+        clear()
         print(f"[{constants.TITLE}]\n")
         print(f"{self.title}\n")
 
     def first_name(self):
         self.main_display()
-        print("Entrez le prénom du joueur :\n")
-        self._first_name = input(">> ").title()
+        self._first_name = prompt("Entrez le prénom du joueur :").title()
 
     def last_name(self):
         self.main_display()
-        print("Entrez le nom du joueur :\n")
-        self._last_name = input(">> ").upper()
+        self._last_name = prompt("Entrez le nom du joueur :").upper()
 
     def birth(self):
         while True:
             self.main_display()
-            print("Entrez le date de naissance (JJ/MM/AAAA) :\n")
-            _input = input('>> ')
+            _input = prompt("Entrez le date de naissance (JJ/MM/AAAA) :")
             try:
                 _input = _input.split('/')
                 year = int(_input[2])
@@ -42,8 +39,8 @@ class PlayerFormView:
     def civility(self):
         while True:
             self.main_display()
-            print("Entrez le sexe du joueur : [H]omme/[F]emme")
-            _input = input('>> ').upper()
+            _input = prompt("Entrez le sexe du joueur : [H]omme/[F]emme")
+            _input = _input.upper()
             if _input == "H":
                 self._civility = "Homme"
                 break
@@ -68,10 +65,10 @@ class PlayerFormView:
             validation = validate
             self.main_display()
             if validation is True:
-                print(f"{self._first_name} {self._last_name} [{self._civility}] "
-                      f"({self._birth})\n\n"
-                      "Les informations sont-elles correctes ? : [O]ui/[N]on")
-                _input = input('>> ').upper()
+                print(f"{self._first_name} {self._last_name} "
+                      f"[{self._civility}] ({self._birth})\n")
+                _input = prompt("Les informations sont-elles correctes ? : "
+                                "[O]ui/[N]on").upper()
                 if _input == "O":
                     self._correct = True
                     break
