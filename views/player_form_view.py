@@ -1,5 +1,5 @@
 from datetime import date
-from utils import constants
+from utils.constants import TITLE
 from utils.functions import clear, prompt
 
 
@@ -9,7 +9,7 @@ class PlayerFormView:
 
     def main_display(self):
         clear()
-        print(f"[{constants.TITLE}]\n")
+        print(f"[{TITLE}]\n")
         print(f"{self.title}\n")
 
     def first_name(self):
@@ -53,12 +53,14 @@ class PlayerFormView:
     def new(self):
         self._correct = False
         while self._correct is False:
-            self.first_name()
-            self.last_name()
-            self.birth()
-            self.civility()
+            self._form = {
+                    "first_name": self.first_name(),
+                    "last_name": self.last_name(),
+                    "birth": self.birth(),
+                    "civility": self.civility()
+                    }
             self.added(True)
-        return
+        return self._form
 
     def added(self, validate=False):
         while True:
