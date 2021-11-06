@@ -3,3 +3,4 @@
 __pycache__/
 sequence.md
 test.py
+db.json

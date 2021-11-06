@@ -15,10 +15,12 @@ class PlayerFormView:
     def first_name(self):
         self.main_display()
         self._first_name = prompt("Entrez le prénom du joueur :").title()
+        return self._first_name
 
     def last_name(self):
         self.main_display()
         self._last_name = prompt("Entrez le nom du joueur :").upper()
+        return self._last_name
 
     def birth(self):
         while True:
@@ -35,6 +37,7 @@ class PlayerFormView:
                 continue
             except IndexError:
                 continue
+        return self._birth
 
     def civility(self):
         while True:
@@ -49,6 +52,7 @@ class PlayerFormView:
                 break
             else:
                 continue
+        return self._civility
 
     def new(self):
         self._correct = False
@@ -56,7 +60,7 @@ class PlayerFormView:
             self._form = {
                     "first_name": self.first_name(),
                     "last_name": self.last_name(),
-                    "birth": self.birth(),
+                    "birth": str(self.birth()),
                     "civility": self.civility()
                     }
             self.added(True)
