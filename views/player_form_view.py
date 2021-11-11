@@ -63,17 +63,19 @@ class PlayerFormView:
                     "birth": str(self.birth()),
                     "civility": self.civility()
                     }
-            valid_form = self.check(player, True)
+            infos = f"{player['first_name']} {player['last_name']} " \
+                    f"[{player['civility']}] ({player['birth']})\n"
+
+            valid_form = self.check(infos, True)
         return player
 
-    def check(self, player, validation=False):
+    def check(self, infos, validation=False):
         while True:
             validation = validation
             self.main_display()
             valid_form = False
             if validation is True:
-                print(f"{player['first_name']} {player['last_name']} "
-                      f"[{player['civility']}] ({player['birth']})\n")
+                print(infos)
                 _input = prompt("Les informations sont-elles correctes ? : "
                                 "[O]ui/[N]on").upper()
                 if _input == "O":
