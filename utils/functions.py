@@ -12,7 +12,8 @@ def open_db(table):
 def save_db(table, serialized):
     db = TinyDB('db.json')
     table = db.table(table)
-    table.insert(serialized)
+    table.truncate()
+    table.insert_multiple(serialized)
 
 
 def clear():
