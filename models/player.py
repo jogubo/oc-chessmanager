@@ -1,6 +1,3 @@
-from tinydb import TinyDB
-
-
 class Player:
     def __init__(self, first_name, last_name, birth, civility):
         self._first_name = first_name
@@ -44,8 +41,16 @@ class Player:
     def civility(self, civility):
         self._civility = civility
 
+    @property
+    def rank(self):
+        if self._rank is None:
+            return ''
+        else:
+            return self._rank
+
+    @property
     def serialize(self):
-        self._serialized_player = {
+        return {
                 "first_name": self.first_name,
                 "last_name": self.last_name,
                 "birth": self.birth,

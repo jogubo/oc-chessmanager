@@ -2,11 +2,17 @@ from os import system
 from tinydb import TinyDB
 
 
-def players_db(serialized_players):
+def open_db(table):
     db = TinyDB('db.json')
-    players_table = db.table('players')
-    players_table.truncate()
-    players_table.insert(serialized_players)
+    table = db.table(table)
+    table = table.all()
+    return table
+
+
+def save_db(table, serialized):
+    db = TinyDB('db.json')
+    table = db.table(table)
+    table.insert(serialized)
 
 
 def clear():

@@ -6,16 +6,16 @@ from controllers.players_menu_ctrl import PlayersMenuCtrl
 
 class HomeMenuCtrl:
     def __init__(self):
-        self.menu = menu.Menu()
-        self.view = menu_view.MenuView(self.menu, "Menu principal")
+        self._menu = menu.Menu()
+        self._view = menu_view.MenuView(self._menu, "Menu principal")
 
     def __call__(self):
-        self.menu.add("auto", "Tournois", TournamentMenuCtrl())
-        self.menu.add("auto", "Joueurs", PlayersMenuCtrl())
-        self.menu.add("Q", "Quitter", None)
+        self._menu.add("auto", "Tournois", TournamentMenuCtrl())
+        self._menu.add("auto", "Joueurs", PlayersMenuCtrl())
+        self._menu.add("Q", "Quitter", None)
 
-        user_choice = self.view.user_choice
+        user_choice = self._view.user_choice
 
         # DEBUG
-        print(user_choice.controller)
+        # print(user_choice.controller)
         user_choice.controller()
