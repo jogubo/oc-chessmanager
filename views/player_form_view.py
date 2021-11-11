@@ -14,13 +14,13 @@ class PlayerFormView:
 
     def first_name(self):
         self.main_display()
-        self._first_name = prompt("Entrez le prénom du joueur :").title()
-        return self._first_name
+        first_name = prompt("Entrez le prénom du joueur :").title()
+        return first_name
 
     def last_name(self):
         self.main_display()
-        self._last_name = prompt("Entrez le nom du joueur :").upper()
-        return self._last_name
+        last_name = prompt("Entrez le nom du joueur :").upper()
+        return last_name
 
     def birth(self):
         while True:
@@ -31,13 +31,13 @@ class PlayerFormView:
                 year = int(_input[2])
                 month = int(_input[1])
                 day = int(_input[0])
-                self._birth = date(year, month, day)
+                birth = date(year, month, day)
                 break
             except ValueError:
                 continue
             except IndexError:
                 continue
-        return self._birth
+        return birth
 
     def civility(self):
         while True:
@@ -45,40 +45,43 @@ class PlayerFormView:
             _input = prompt("Entrez le sexe du joueur : [H]omme/[F]emme")
             _input = _input.upper()
             if _input == "H":
-                self._civility = "Homme"
+                civility = "Homme"
                 break
             elif _input == "F":
-                self._civility = "Femme"
+                civility = "Femme"
                 break
             else:
                 continue
-        return self._civility
+        return civility
 
     def new(self):
-        self._correct = False
-        while self._correct is False:
-            self._form = {
+        valid_form = False
+        while valid_form is False:
+            player = {
                     "first_name": self.first_name(),
                     "last_name": self.last_name(),
                     "birth": str(self.birth()),
                     "civility": self.civility()
                     }
-            self.added(True)
-        return self._form
+            valid_form = self.check(player, True)
+        return player
 
-    def added(self, validate=False):
+    def check(self, player, validation=False):
         while True:
-            validation = validate
+            validation = validation
             self.main_display()
+            valid_form = False
             if validation is True:
-                print(f"{self._first_name} {self._last_name} "
-                      f"[{self._civility}] ({self._birth})\n")
+                print(f"{player['first_name']} {player['last_name']} "
+                      f"[{player['civility']}] ({player['birth']})\n")
                 _input = prompt("Les informations sont-elles correctes ? : "
                                 "[O]ui/[N]on").upper()
                 if _input == "O":
-                    self._correct = True
+                    valid_form = True
                     break
                 elif _input == "N":
+                    valid_form = False
                     break
                 else:
                     continue
+            return valid_form

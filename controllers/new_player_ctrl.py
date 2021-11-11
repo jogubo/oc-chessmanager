@@ -6,16 +6,16 @@ from utils.functions import open_db, save_db
 
 class NewPlayerCtrl:
     def __call__(self):
-        self._menu = players_menu_ctrl.PlayersMenuCtrl()
-        self._new_player_form = PlayerFormView("Ajouter un nouveau joueur")
-        self._form = self._new_player_form.new()
+        menu = players_menu_ctrl.PlayersMenuCtrl()
+        new_player_form = PlayerFormView("Ajouter un nouveau joueur")
+        form = new_player_form.new()
         player = Player(
-                self._form['first_name'],
-                self._form['last_name'],
-                self._form['birth'],
-                self._form['civility']
+                form['first_name'],
+                form['last_name'],
+                form['birth'],
+                form['civility']
                 )
         serialized_players = open_db('players')
         serialized_players.append(player.serialize)
         save_db('players', serialized_players)
-        self._menu()
+        menu()
