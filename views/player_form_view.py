@@ -73,17 +73,13 @@ class PlayerFormView:
         while True:
             validation = validation
             self.main_display()
-            valid_form = False
             if validation is True:
                 print(infos)
                 _input = prompt("Les informations sont-elles correctes ? : "
                                 "[O]ui/[N]on").upper()
                 if _input == "O":
-                    valid_form = True
-                    break
+                    return True
                 elif _input == "N":
-                    valid_form = False
-                    break
+                    return False
                 else:
                     continue
-            return valid_form
