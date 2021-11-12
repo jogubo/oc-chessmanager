@@ -1,7 +1,7 @@
 from views.player_form_view import PlayerFormView
 from controllers import players_menu_ctrl
 from models.player import Player
-from utils.functions import open_db, save_db
+from utils.database import Database
 
 
 class NewPlayerCtrl:
@@ -15,7 +15,7 @@ class NewPlayerCtrl:
                 form['birth'],
                 form['civility']
                 )
-        serialized_players = open_db('players')
+        serialized_players = []
         serialized_players.append(player.serialize)
-        save_db('players', serialized_players)
+        Database.add('players', serialized_players)
         menu()
