@@ -1,1 +1,1 @@
-TITLE = 'ChessManager'
+APP_NAME = 'ChessManager'

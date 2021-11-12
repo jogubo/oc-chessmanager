@@ -1,5 +1,5 @@
 from datetime import date
-from utils.constants import TITLE
+from utils.constants import APP_NAME
 from utils.functions import clear, prompt
 
 
@@ -9,7 +9,7 @@ class PlayerFormView:
 
     def main_display(self):
         clear()
-        print(f"[{TITLE}]\n")
+        print(f"[{APP_NAME}]\n")
         print(f"{self.title}\n")
 
     def first_name(self):

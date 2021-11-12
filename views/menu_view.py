@@ -1,5 +1,5 @@
-from utils import constants
-from utils import functions
+from utils.constants import APP_NAME
+from utils.functions import clear, prompt
 
 
 class MenuView:
@@ -9,18 +9,18 @@ class MenuView:
 
     @property
     def display(self):
-        functions.clear()
-        print(f"[{constants.TITLE}]\n")
+        clear()
+        print(f"[{APP_NAME}]\n")
         print(f"{self.title}\n")
         for key, value in self.menu.entries.items():
             print(f"[{key}] : {value}")
+        print("")
 
     @property
     def user_choice(self):
         while True:
             self.display
-            print("\nEntrez le choix correspondant :")
-            choice = input('>> ').upper()
+            choice = prompt("Entrez le choix correspondant :").upper()
             if choice in self.menu.entries:
                 return self.menu.entries[choice]
             else:

@@ -9,7 +9,7 @@ class TournamentFormView:
 
     def main_display(self):
         functions.clear()
-        print(f"[{constants.TITLE}]\n")
+        print(f"[{constants.APP_NAME}]\n")
         print(f"{self.title}\n")
 
     def name(self):
