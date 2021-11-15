@@ -1,10 +1,22 @@
+from uuid import uuid4
+
+
 class Player:
-    def __init__(self, first_name, last_name, birth, civility):
+    def __init__(
+            self,
+            first_name,
+            last_name,
+            birth,
+            civility,
+            rank=None,
+            id=uuid4()
+            ):
         self._first_name = first_name
         self._last_name = last_name
         self._birth = birth
         self._civility = civility
-        self._rank = None
+        self._rank = rank
+        self._id = id
 
     def __repr__(self):
         return f"{self.last_name} {self.first_name}"

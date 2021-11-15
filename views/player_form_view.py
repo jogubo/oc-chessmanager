@@ -10,7 +10,7 @@ class PlayerFormView:
     def main_display(self):
         clear()
         print(f"[{APP_NAME}]\n")
-        print(f"{self.title}\n")
+        print(f"{self.menu_title}\n")
 
     def first_name(self):
         self.main_display()
