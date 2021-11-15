@@ -4,6 +4,11 @@ from utils.functions import clear, prompt
 
 
 class PlayerFormView:
+    '''
+    This class contains the views for displaying a player creation
+    or modification form
+    '''
+
     def __init__(self, menu_title):
         self.menu_title = menu_title
 
@@ -31,7 +36,7 @@ class PlayerFormView:
                 year = int(_input[2])
                 month = int(_input[1])
                 day = int(_input[0])
-                birth = date(year, month, day)
+                birth = str(date(year, month, day))
                 break
             except ValueError:
                 continue
@@ -55,12 +60,15 @@ class PlayerFormView:
         return civility
 
     def new(self):
+        '''
+        Displays a form to create a new player
+        '''
         valid_form = False
         while valid_form is False:
             player = {
                     "first_name": self.first_name(),
                     "last_name": self.last_name(),
-                    "birth": str(self.birth()),
+                    "birth": self.birth(),
                     "civility": self.civility()
                     }
             infos = f"{player['first_name']} {player['last_name']} " \
@@ -70,6 +78,16 @@ class PlayerFormView:
         return player
 
     def check(self, infos, validation=False):
+        '''
+        Displays the values entered in the form and confirmation request.
+
+            Parameters:
+                infos (str): The modified informations to be desplayed
+                validation (bool):  Display a confirmation request
+
+                Returns:
+                    Boolean (bool): Return True if the form is correct
+        '''
         while True:
             validation = validation
             self.main_display()
