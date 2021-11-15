@@ -62,6 +62,9 @@ class PlayerFormView:
     def new(self):
         '''
         Displays a form to create a new player
+
+            Returns:
+                Dictionary (dict)
         '''
         valid_form = False
         while valid_form is False:
@@ -79,7 +82,7 @@ class PlayerFormView:
 
     def check(self, infos, validation=False):
         '''
-        Displays the values entered in the form and confirmation request.
+        Displays the values entered in the form and confirmation request
 
             Parameters:
                 infos (str): The modified informations to be desplayed

@@ -9,7 +9,7 @@ class Player:
             birth,
             civility,
             rank=None,
-            id=uuid4()
+            id=None
             ):
         self._first_name = first_name
         self._last_name = last_name
@@ -17,6 +17,8 @@ class Player:
         self._civility = civility
         self._rank = rank
         self._id = id
+        if id is None:
+            self._id = str(uuid4())
 
     def __repr__(self):
         return f"{self.last_name} {self.first_name}"
@@ -61,11 +63,16 @@ class Player:
             return self._rank
 
     @property
+    def id(self):
+        return self._id
+
+    @property
     def serialize(self):
         return {
                 "first_name": self.first_name,
                 "last_name": self.last_name,
                 "birth": self.birth,
                 "civility": self.civility,
-                "rank": self.rank
+                "rank": self.rank,
+                "id": self.id
                 }

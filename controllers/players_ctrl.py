@@ -15,7 +15,9 @@ class PlayerCtrl:
                     first_name=player["first_name"],
                     last_name=player["last_name"],
                     birth=player["birth"],
-                    civility=player["civility"]
+                    civility=player["civility"],
+                    rank=player["rank"],
+                    id=player["id"]
                     )
             players.append(player)
         self._view.list(players)
