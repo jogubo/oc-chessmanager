@@ -14,7 +14,7 @@ class HomeMenuCtrl:
         self._menu.add("auto", "Joueurs", PlayersMenuCtrl())
         self._menu.add("Q", "Quitter", None)
 
-        user_choice = self._view.user_choice
+        user_choice = self._view.user_choice()
 
         # DEBUG
         # print(user_choice.controller)

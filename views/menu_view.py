@@ -16,7 +16,6 @@ class MenuView:
             print(f"[{key}] : {value}")
         print("")
 
-    @property
     def user_choice(self):
         while True:
             self.display

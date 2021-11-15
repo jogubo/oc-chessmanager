@@ -4,8 +4,8 @@ from utils.functions import clear, prompt
 
 
 class PlayerFormView:
-    def __init__(self, title):
-        self.title = title
+    def __init__(self, menu_title):
+        self.menu_title = menu_title
 
     def main_display(self):
         clear()
