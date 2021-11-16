@@ -19,18 +19,31 @@ class TournamentFormView:
 
     def name(self):
         self.main_display()
-        name = prompt("Entrez le nom du tournoi :")
+        name = prompt("Entrez le nom du tournoi :").title()
         return name
 
     def location(self):
         self.main_display()
-        location = prompt("Entrez le lieu du tournoi :")
+        location = prompt("Entrez le lieu du tournoi :").upper()
         return location
 
     def description(self):
         self.main_display()
-        description = prompt("Entrez la description du tournoi :")
+        description = prompt("Entrez la description du tournoi :").capitalize()
         return description
+
+    def nb_players(self):
+        while True:
+            self.main_display()
+            number = prompt("Indiquez le nombre de joueurs pour ce tournoi")
+            try:
+                number = int(number)
+                if number > 4 and (number % 2) == 0:
+                    return number
+                else:
+                    continue
+            except ValueError:
+                continue
 
     def add_player(self):
         self.main_display()
@@ -42,6 +55,8 @@ class TournamentFormView:
         '''
         tournament = {
                 "name": self.name(),
-                "description": self.description()
+                "description": self.description(),
+                "location": self.location(),
+                "nb_players": self.nb_players()
                 }
         return tournament
