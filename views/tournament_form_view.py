@@ -1,6 +1,6 @@
 # from datetime import date
 from utils import constants
-from utils import functions
+from utils.functions import clear, prompt
 
 
 class TournamentFormView:
@@ -13,27 +13,28 @@ class TournamentFormView:
         self.menu_title = menu_title
 
     def main_display(self):
-        functions.clear()
+        clear()
         print(f"[{constants.APP_NAME}]\n")
         print(f"{self.menu_title}\n")
 
     def name(self):
         self.main_display()
-        print("Entrez le nom du tournoi :")
-        name = input('>> ')
+        name = prompt("Entrez le nom du tournoi :")
         return name
 
     def location(self):
         self.main_display()
-        print("Entrez le lieu du tournoi :")
-        location = input('>> ')
+        location = prompt("Entrez le lieu du tournoi :")
         return location
 
     def description(self):
         self.main_display()
-        print("Entrez la description du tournoi :")
-        description = input('>> ')
+        description = prompt("Entrez la description du tournoi :")
         return description
+
+    def add_player(self):
+        self.main_display()
+        _input = prompt("Entrez le nom du joueur recherché :").upper()
 
     def new(self):
         '''

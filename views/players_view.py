@@ -1,5 +1,5 @@
 from utils.constants import APP_NAME
-from utils.functions import clear
+from utils.functions import clear, prompt
 
 
 class PlayersView:
@@ -13,5 +13,14 @@ class PlayersView:
 
     def list(self, players):
         self.main_display()
+        i = 1
         for player in players:
-            print(player)
+            print(f"[{i}] - {player}")
+            i += 1
+        _input = prompt('')
+        return _input
+
+    def search(self):
+        self.main_display()
+        _input = prompt("Entrez le nom du joueur recherché :").upper()
+        return _input

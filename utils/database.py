@@ -1,4 +1,4 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
 
 
 class Database:
@@ -19,3 +19,10 @@ class Database:
     def add(table, serialized):
         table = Database.table(table)
         table.insert_multiple(serialized)
+
+    @staticmethod
+    def search(table, search):
+        table = Database.table(table)
+        q = Query()
+        result = table.search(q.last_name == search)
+        return result
