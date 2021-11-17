@@ -21,8 +21,7 @@ class PlayerCtrl:
         players = self.list(search_result)
         user_choice = self._view.list(players)
         player = players[int(user_choice) - 1]
-        print(player.id)
-        return players
+        return player.id
 
     def list(self, results):
         players = []
