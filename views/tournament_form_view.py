@@ -38,7 +38,7 @@ class TournamentFormView:
             number = prompt("Indiquez le nombre de joueurs pour ce tournoi")
             try:
                 number = int(number)
-                if number > 4 and (number % 2) == 0:
+                if number >= 4 and (number % 4) == 0:
                     return number
                 else:
                     continue

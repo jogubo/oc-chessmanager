@@ -3,6 +3,7 @@ class Tournament:
             self,
             name,
             location,
+            players,
             date,
             turns,
             rounds,
@@ -11,6 +12,7 @@ class Tournament:
             ):
         self._name = name
         self._location = location
+        self._players = players
         self._date = date
         self._turns = turns
         self._rounds = rounds
@@ -18,7 +20,12 @@ class Tournament:
         self._description = description
 
     def __repr__(self):
-        return self._name
+        return f"""
+        {self.name}
+        {self.description}
+        Joueurs participants:
+        {self.players}
+        """
 
     @property
     def name(self):
@@ -35,6 +42,10 @@ class Tournament:
     @location.setter
     def location(self, location):
         self._location = location
+
+    @property
+    def players(self):
+        return self._players
 
     @property
     def date(self):
@@ -75,3 +86,10 @@ class Tournament:
     @description.setter
     def description(self, text):
         self._description = text
+
+    def serialize(self):
+        return {
+                "name": self.name,
+                "description": self.description,
+                "players": self.players
+                }
