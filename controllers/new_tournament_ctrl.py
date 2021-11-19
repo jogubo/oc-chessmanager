@@ -20,8 +20,6 @@ class NewTournamentCtrl:
             selected_player = self._players.search()
             players.append(selected_player)
             i -= 1
-        print(players)
-
         tournament = Tournament(
                 form["name"],
                 form["location"],
