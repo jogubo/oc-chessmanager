@@ -1,14 +1,13 @@
 from views.tournament_form_view import TournamentFormView
 from controllers import tournament_menu_ctrl
-from controllers.players_ctrl import PlayerCtrl
+from controllers.players_ctrl import PlayersCtrl
 from models.tournament import Tournament
-from models.player import Player
 from utils.database import Database
 
 
 class NewTournamentCtrl:
     def __init__(self):
-        self._players = PlayerCtrl()
+        self._players = PlayersCtrl()
 
     def __call__(self):
         menu = tournament_menu_ctrl.TournamentMenuCtrl()

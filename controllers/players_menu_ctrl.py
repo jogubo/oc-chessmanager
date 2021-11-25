@@ -11,7 +11,7 @@ class PlayersMenuCtrl:
         self.view = menu_view.MenuView(self.menu, "Joueurs")
 
     def __call__(self):
-        self.menu.add("auto", "Liste des joueurs", players_ctrl.PlayerCtrl())
+        self.menu.add("auto", "Liste des joueurs", players_ctrl.PlayersCtrl())
         self.menu.add("auto", "Ajouter un nouveau joueur", new_player_ctrl.NewPlayerCtrl())
         self.menu.add("auto", "Menu principal", home_menu_ctrl.HomeMenuCtrl())
         self.menu.add("Q", "Quitter", None)

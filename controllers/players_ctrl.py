@@ -3,15 +3,18 @@ from models.player import Player
 from views.players_view import PlayersView
 
 
-class PlayerCtrl:
+class PlayersCtrl:
 
     def __init__(self):
         self._view = PlayersView("Liste des joueurs")
 
     def __call__(self):
         serialized_players = Database.get('players')
+        for player in serialized_players:
+            player["id"] = player.doc_id
         players = self.list(serialized_players)
-        return players
+        self._view.list(players)
+        pass
 
     def search(self):
         '''
