@@ -27,5 +27,6 @@ class Database:
         search = table.search(q.last_name == search)
         results = []
         for item in search:
-            results.append((item.doc_id, item))
+            item["id"] = item.doc_id
+            results.append(item)
         return results
