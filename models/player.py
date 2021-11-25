@@ -17,8 +17,6 @@ class Player:
         self._civility = civility
         self._rank = rank
         self._id = id
-        if id is None:
-            self._id = str(uuid4())
 
     def __repr__(self):
         return f"{self.last_name} {self.first_name}"

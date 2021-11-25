@@ -24,5 +24,8 @@ class Database:
     def search(table, search):
         table = Database.table(table)
         q = Query()
-        result = table.search(q.last_name == search)
-        return result
+        search = table.search(q.last_name == search)
+        results = []
+        for item in search:
+            results.append((item.doc_id, item))
+        return results

@@ -27,12 +27,12 @@ class PlayerCtrl:
         players = []
         for player in results:
             player = Player(
-                    first_name=player["first_name"],
-                    last_name=player["last_name"],
-                    birth=player["birth"],
-                    civility=player["civility"],
-                    rank=player["rank"],
-                    id=player["id"]
+                    first_name=player[1]["first_name"],
+                    last_name=player[1]["last_name"],
+                    birth=player[1]["birth"],
+                    civility=player[1]["civility"],
+                    rank=player[1]["rank"],
+                    id=player[0]
                     )
             players.append(player)
         return players
