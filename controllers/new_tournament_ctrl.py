@@ -1,3 +1,4 @@
+from models.player import Player
 from views.tournament_form_view import TournamentFormView
 from controllers import tournament_menu_ctrl
 from controllers.players_ctrl import PlayersCtrl
@@ -14,11 +15,12 @@ class NewTournamentCtrl:
         new_tournament_form = TournamentFormView("Créer un nouveau tournoi")
         form = new_tournament_form.new()
         players = []
-        i = form["nb_players"]
-        while i > 0:
-            selected_player = self._players.search()
-            players.append(selected_player)
-            i -= 1
+        nb_player = 4  # form["nb_players"]
+        while nb_player > 0:
+            player = self._players.search()
+            players.append((player["id"], int(player["rank"])))
+            nb_player -= 1
+        players.sort(key=lambda x: x[1])
         tournament = Tournament(
                 form["name"],
                 form["location"],

@@ -16,7 +16,7 @@ class Player:
         self._id = id
 
     def __repr__(self):
-        return f"{self.last_name} {self.first_name}"
+        return f"{self.last_name} {self.first_name} - id: { self.id} | rank: {self.rank}"
 
     @property
     def first_name(self):

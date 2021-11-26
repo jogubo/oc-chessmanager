@@ -24,7 +24,7 @@ class PlayersCtrl:
         players = self.list(search_result)
         user_choice = self._view.list(players)
         player = players[int(user_choice) - 1]
-        return player.id
+        return player.serialize
 
     def list(self, results):
         players = []

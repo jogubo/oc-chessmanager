@@ -1,1 +1,2 @@
 APP_NAME = 'ChessManager'
+NUMBER_PLAYERS = 8

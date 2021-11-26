@@ -10,10 +10,14 @@ class Database:
         return table
 
     @staticmethod
-    def get(table):
+    def get(table, id=None):
+        id = id
         table = Database.table(table)
-        table = table.all()
-        return table
+        if id is None:
+            item = table.all()
+        else:
+            item = table.all()[id]
+        return item
 
     @staticmethod
     def add(table, serialized):
@@ -30,3 +34,7 @@ class Database:
             item["id"] = item.doc_id
             results.append(item)
         return results
+
+
+test = Database.get('players')
+print(test)

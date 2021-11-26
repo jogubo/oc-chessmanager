@@ -33,17 +33,18 @@ class TournamentFormView:
         return description
 
     def nb_players(self):
-        while True:
-            self.main_display()
-            number = prompt("Indiquez le nombre de joueurs pour ce tournoi")
-            try:
-                number = int(number)
-                if number >= 4 and (number % 4) == 0:
-                    return number
-                else:
-                    continue
-            except ValueError:
-                continue
+        # while True:
+        #    self.main_display()
+        #    number = prompt("Indiquez le nombre de joueurs pour ce tournoi")
+        #    try:
+        #        number = int(number)
+        #        if number >= 4 and (number % 4) == 0:
+        #            return number
+        #        else:
+        #            continue
+        #    except ValueError:
+        #        continue
+        return constants.NUMBER_PLAYERS
 
     def add_player(self):
         self.main_display()

@@ -45,7 +45,8 @@ class Tournament:
 
     @property
     def players(self):
-        return self._players
+        players_id = self._players
+        return players_id
 
     @property
     def date(self):
