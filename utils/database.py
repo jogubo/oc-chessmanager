@@ -34,7 +34,3 @@ class Database:
             item["id"] = item.doc_id
             results.append(item)
         return results
-
-
-test = Database.get('players')
-print(test)
