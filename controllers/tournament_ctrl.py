@@ -32,11 +32,9 @@ class TournamentCtrl:
                     )
             self._players.append(player)
 
-    def generate_pvp(self):
+    def sort_players(self):
         players = self._tournament.players
-        print(f"Liste avant algo: {players}")
-        score = 1
-        rank = 2
+        score, rank = 1, 2
         players.sort(key=lambda x: x[score], reverse=True)
         for i in range(0, len(players)):
             for j in range(0, len(players)-i-1):
@@ -46,7 +44,6 @@ class TournamentCtrl:
                         players[j] = players[j+1]
                         players[j+1] = temp
 
-        print(f"Liste triée: {players}")
         return players
 
     def test(self):
