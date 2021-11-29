@@ -9,7 +9,8 @@ class TournamentCtrl:
         self._tournament = Tournament(
                 data["name"],
                 "location",
-                data["players"],
+                # data["players"],
+                [[1, 3, 4], [2, 6, 12], [3, 6, 15], [6, 12, 1]],
                 "date",
                 "turns",
                 "rounds",
@@ -31,8 +32,22 @@ class TournamentCtrl:
                     )
             self._players.append(player)
 
-    def generate_pvp(self, round, players):
-        pass
+    def generate_pvp(self):
+        players = self._tournament.players
+        print(f"Liste avant algo: {players}")
+        score = 1
+        rank = 2
+        players.sort(key=lambda x: x[score], reverse=True)
+        for i in range(0, len(players)):
+            for j in range(0, len(players)-i-1):
+                if (players[j][score] == players[j+1][score]):
+                    if (players[j][rank] > players[j+1][rank]):
+                        temp = players[j]
+                        players[j] = players[j+1]
+                        players[j+1] = temp
+
+        print(f"Liste triée: {players}")
+        return players
 
     def test(self):
         print(self._players)
