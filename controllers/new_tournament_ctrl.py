@@ -14,7 +14,7 @@ class NewTournamentCtrl:
         new_tournament_form = TournamentFormView("Créer un nouveau tournoi")
         form = new_tournament_form.new()
         players = []
-        total_players = 4  # form["nb_players"]
+        total_players = 8  # form["nb_players"]
         while total_players > 0:
             player = self._players.search()
             players.append((player["id"], player["rank"]))
@@ -32,5 +32,5 @@ class NewTournamentCtrl:
                 )
         serialized_tournaments = []
         serialized_tournaments.append(tournament.serialize())
-        # Database.add('tournaments', serialized_tournaments)
-        # menu()
+        Database.add('tournaments', serialized_tournaments)
+        menu()

@@ -16,7 +16,7 @@ class Database:
         if id is None:
             item = table.all()
         else:
-            item = table.all()[id]
+            item = table.get(doc_id=id)
         return item
 
     @staticmethod
