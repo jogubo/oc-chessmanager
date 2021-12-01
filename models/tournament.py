@@ -48,6 +48,10 @@ class Tournament:
         players_id = self._players
         return players_id
 
+    @players.setter
+    def players(self, players_id):
+        self._players = players_id
+
     @property
     def date(self):
         return self._date
@@ -87,6 +91,45 @@ class Tournament:
     @description.setter
     def description(self, text):
         self._description = text
+
+    def sort_players(self):
+        '''
+        Player's data is list:
+            [player_id, player_score, player_rank]
+        '''
+        players = self.players
+        score, rank = 1, 2
+        players.sort(key=lambda x: x[score], reverse=True)
+        for i in range(0, len(players)):
+            for j in range(0, len(players)-i-1):
+                if (players[j][score] == players[j+1][score]):
+                    if (players[j][rank] > players[j+1][rank]):
+                        temp = players[j]
+                        players[j] = players[j+1]
+                        players[j+1] = temp
+        self.players = players
+        return players
+
+    def generate_versus(self):
+        players = self.players
+        median = int(len(players) / 2)
+        versus = []
+        if len(players[0]) == 3:
+            for i in range(median):
+                versus.append((players[i][0], players[i+median][0]))
+        else:
+            while len(versus) < median:
+                i, j = 0, 1
+                while len(players) > 0:
+                    history = players[i][3]
+                    player = players[j][0]
+                    if player in history:
+                        j = j+1
+                    else:
+                        versus.append((players[i][0], players[j][0]))
+                        del players[j]
+                        del players[i]
+        return versus
 
     def serialize(self):
         return {
