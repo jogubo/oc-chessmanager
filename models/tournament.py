@@ -114,21 +114,20 @@ class Tournament:
         players = self.players
         median = int(len(players) / 2)
         versus = []
-        if len(players[0]) == 3:
+        if len(players[0][3]) == 0:
             for i in range(median):
                 versus.append((players[i][0], players[i+median][0]))
         else:
-            while len(versus) < median:
-                i, j = 0, 1
-                while len(players) > 0:
-                    history = players[i][3]
-                    player = players[j][0]
-                    if player in history:
-                        j = j+1
-                    else:
-                        versus.append((players[i][0], players[j][0]))
-                        del players[j]
-                        del players[i]
+            i = 1
+            while len(players) > 0:
+                player_1, player_2 = players[0], players[i]
+                if player_2[0] in player_1[3]:
+                    i += 1
+                else:
+                    versus.append((player_1[0], player_2[0]))
+                    del players[i]
+                    del players[0]
+                    i = 1
         return versus
 
     def serialize(self):
