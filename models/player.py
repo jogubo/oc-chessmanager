@@ -35,6 +35,10 @@ class Player:
         self._last_name = last_name
 
     @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    @property
     def birth(self):
         return self._birth
 

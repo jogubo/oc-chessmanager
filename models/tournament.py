@@ -12,7 +12,7 @@ class Tournament:
             ):
         self._name = name
         self._location = location
-        self._players = players
+        self._players_data = players
         self._date = date
         self._turns = turns
         self._rounds = rounds
@@ -44,13 +44,12 @@ class Tournament:
         self._location = location
 
     @property
-    def players(self):
-        players_id = self._players
-        return players_id
+    def players_data(self):
+        return self._players_data
 
-    @players.setter
-    def players(self, players_id):
-        self._players = players_id
+    @players_data.setter
+    def players_data(self, players_data):
+        self._players_data = players_data
 
     @property
     def date(self):
@@ -97,7 +96,7 @@ class Tournament:
         Player's data is list:
             [player_id, player_score, player_rank]
         '''
-        players = self.players
+        players = self.players_data
         score, rank = 1, 2
         players.sort(key=lambda x: x[score], reverse=True)
         for i in range(0, len(players)):
@@ -107,11 +106,11 @@ class Tournament:
                         temp = players[j]
                         players[j] = players[j+1]
                         players[j+1] = temp
-        self.players = players
+        self.players_data = players
         return players
 
     def generate_versus(self):
-        players = self.players
+        players = self.players_data
         median = int(len(players) / 2)
         versus = []
         if len(players[0][3]) == 0:
