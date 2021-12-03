@@ -19,7 +19,6 @@ class PlayersCtrl:
     @staticmethod
     def get_player(id):
         data = Database.get('players', id)
-        print(data)
         return Player(
                     first_name=data["first_name"],
                     last_name=data["last_name"],

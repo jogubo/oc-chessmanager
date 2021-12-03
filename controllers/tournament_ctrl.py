@@ -21,3 +21,5 @@ class TournamentCtrl:
         for player in self._tournament.players_data:
             id = player[0]
             self._players[id] = PlayersCtrl.get_player(id)
+            self._players[id].score = player[2]
+            self._players[id].rank = player[3]

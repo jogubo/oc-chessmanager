@@ -14,6 +14,7 @@ class Player:
         self._civility = civility
         self._rank = rank
         self._id = id
+        self._score = 0
 
     def __repr__(self):
         return f"{self.full_name}"
@@ -60,6 +61,18 @@ class Player:
             return ''
         else:
             return self._rank
+
+    @rank.setter
+    def rank(self, rank):
+        self._rank = rank
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, score):
+        self._score = score
 
     @property
     def id(self):
