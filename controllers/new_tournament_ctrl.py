@@ -14,12 +14,11 @@ class NewTournamentCtrl:
         new_tournament_form = TournamentFormView("Créer un nouveau tournoi")
         form = new_tournament_form.new()
         players = []
-        total_players = 8  # form["nb_players"]
+        total_players = form["nb_players"]
         while total_players > 0:
             player = self._players.search()
-            players.append((player["id"], player["rank"]))
+            players.append((player["id"], 0.0, player["rank"]))
             total_players -= 1
-        players.sort(key=lambda x: x[1])
         tournament = Tournament(
                 form["name"],
                 form["location"],

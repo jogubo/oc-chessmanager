@@ -9,6 +9,6 @@ def clear():
 def prompt(message=None):
     """Custom prompt"""
     if message is not None:
-        print(message)
+        print(f"\n{message}")
     _input = input('>> ')
     return _input
