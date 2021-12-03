@@ -1,6 +1,6 @@
 from utils.database import Database
 from models.tournament import Tournament
-from models.player import Player
+from controllers.players_ctrl import PlayersCtrl
 
 
 class TournamentCtrl:
@@ -20,13 +20,4 @@ class TournamentCtrl:
         self._players = {}
         for player in self._tournament.players_data:
             id = player[0]
-            serialized_player = Database.get('players', id)
-            player = Player(
-                    first_name=serialized_player["first_name"],
-                    last_name=serialized_player["last_name"],
-                    birth=serialized_player["birth"],
-                    civility=serialized_player["civility"],
-                    rank=1,
-                    id=serialized_player.doc_id
-                    )
-            self._players[id] = player
+            self._players[id] = PlayersCtrl.get_player(id)
