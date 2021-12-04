@@ -1,6 +1,6 @@
 from models.menu import Menu
 from views.menu_view import MenuView
-from controllers.tournament_ctrl import TournamentCtrl
+from controllers.tournaments_ctrl import TournamentsCtrl
 from controllers.players_ctrl import PlayersCtrl
 
 
@@ -14,7 +14,7 @@ class HomeCtrl:
         cls.menu.add(
                 "auto",
                 "Créer un nouveau tournoi",
-                TournamentCtrl.create_new
+                TournamentsCtrl.create_new
                 )
         cls.menu.add(
                 "auto",
@@ -29,7 +29,7 @@ class HomeCtrl:
         cls.menu.add(
                 "Q",
                 "Quitter",
-                TournamentCtrl.create_new
+                None
                 )
         user_choice = cls.view.user_choice()
         user_choice.controller()

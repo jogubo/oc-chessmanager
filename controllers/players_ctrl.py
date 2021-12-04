@@ -1,20 +1,19 @@
 from utils. database import Database
 from models.player import Player
 from views.players_view import PlayersView
-from views.player_form_view import PlayerFormView
+#from views.player_form_view import PlayerFormView
 
 
 class PlayersCtrl:
 
-    def __init__(self):
-        self._view = PlayersView("Liste des joueurs")
-
-    def __call__(self):
+    @classmethod
+    def get_list(cls):
+        view = PlayersView("Liste des joueurs")
         serialized_players = Database.get('players')
         for player in serialized_players:
             player["id"] = player.doc_id
-        players = self.list(serialized_players)
-        self._view.list(players)
+        players = cls.list(serialized_players)
+        view.list(players)
         pass
 
     @staticmethod
@@ -55,8 +54,7 @@ class PlayersCtrl:
 
     @staticmethod
     def create_new():
-        new_player_form = PlayerFormView("Ajouter un nouveau joueur")
-        form = new_player_form.new()
+        form = PlayersView.create_new_player()
         player = Player(
                 form['first_name'],
                 form['last_name'],

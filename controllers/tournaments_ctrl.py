@@ -4,7 +4,7 @@ from controllers.players_ctrl import PlayersCtrl
 from views.tournament_form_view import TournamentFormView
 
 
-class TournamentCtrl:
+class TournamentsCtrl:
     def __init__(self, tournament_id):
         data = Database.get('tournaments', tournament_id)
         self._tournament = Tournament(
