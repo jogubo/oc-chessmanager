@@ -1,6 +1,7 @@
 from utils. database import Database
 from models.player import Player
 from views.players_view import PlayersView
+from views.player_form_view import PlayerFormView
 
 
 class PlayersCtrl:
@@ -53,5 +54,15 @@ class PlayersCtrl:
         return players
 
     @staticmethod
-    def new_player():
-        pass
+    def create_new():
+        new_player_form = PlayerFormView("Ajouter un nouveau joueur")
+        form = new_player_form.new()
+        player = Player(
+                form['first_name'],
+                form['last_name'],
+                form['birth'],
+                form['civility']
+                )
+        serialized_players = []
+        serialized_players.append(player.serialize)
+        Database.add('players', serialized_players)

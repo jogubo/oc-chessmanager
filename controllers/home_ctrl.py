@@ -1,7 +1,6 @@
 from models.menu import Menu
 from views.menu_view import MenuView
 from controllers.tournament_ctrl import TournamentCtrl
-from controllers.new_player_ctrl import NewPlayerCtrl
 from controllers.players_ctrl import PlayersCtrl
 
 
@@ -24,7 +23,7 @@ class HomeCtrl:
                 )
         cls.menu.add(
                 "auto",
-                "Ajouter un nouveau joueur", NewPlayerCtrl()
+                "Ajouter un nouveau joueur", PlayersCtrl.create_new
                 )
 
         cls.menu.add(
