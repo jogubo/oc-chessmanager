@@ -97,12 +97,12 @@ class Tournament:
             [player_id, player_score, player_rank]
         '''
         players = self.players_data
-        score, rank = 1, 2
-        players.sort(key=lambda x: x[score], reverse=True)
+        SCORE, RANK = 1, 2
+        players.sort(key=lambda x: x[SCORE], reverse=True)
         for i in range(0, len(players)):
             for j in range(0, len(players)-i-1):
-                if (players[j][score] == players[j+1][score]):
-                    if (players[j][rank] > players[j+1][rank]):
+                if (players[j][SCORE] == players[j+1][SCORE]):
+                    if (players[j][RANK] > players[j+1][RANK]):
                         temp = players[j]
                         players[j] = players[j+1]
                         players[j+1] = temp
@@ -119,11 +119,11 @@ class Tournament:
         else:
             i = 1
             while len(players) > 0:
-                player_1, player_2 = players[0], players[i]
-                if player_2[0] in player_1[3]:
+                PLAYER_1, PLAYER_2 = players[0], players[i]
+                if PLAYER_2[0] in PLAYER_1[3]:
                     i += 1
                 else:
-                    versus.append((player_1[0], player_2[0]))
+                    versus.append((PLAYER_1[0], PLAYER_2[0]))
                     del players[i]
                     del players[0]
                     i = 1

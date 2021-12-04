@@ -1,14 +1,27 @@
 import sys
 from controllers.home_ctrl import HomeCtrl
+from controllers.tournaments_ctrl import TournamentsCtrl
+from controllers.players_ctrl import PlayersCtrl
 
 
 class ApplicationCtrl:
 
-    @staticmethod
-    def start():
-        controller = HomeCtrl.display_menu()
-        controller()
+    ROUTES = {
+            'home': HomeCtrl.display_menu,
+            'new_tournament': TournamentsCtrl.create_new,
+            'list_players': PlayersCtrl.get_list,
+            'new_player': PlayersCtrl.create_new
+            }
 
-    @staticmethod
-    def close():
-        sys.exit()
+    def __init__(self):
+        self.route = 'home'
+        self.close_app = False
+
+    def start(self):
+        while not self.close_app:
+            controller_method = self.ROUTES[self.route]
+            next_route = controller_method()
+            self.route = next_route
+            if next_route == 'close_app':
+                self.close_app = True
+                sys.exit()

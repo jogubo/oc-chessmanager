@@ -13,6 +13,7 @@ class PlayersView:
 
     @classmethod
     def list(cls, players):
+        cls.title = "Liste des joueurs\n"
         cls.main_display()
         i = 1
         for player in players:
@@ -93,7 +94,7 @@ class PlayersView:
             infos = f"{player['first_name']} {player['last_name']} " \
                     f"[{player['civility']}] ({player['birth']})\n"
 
-            valid_form = True #cls.check(infos, True)
+            valid_form = cls.check(infos, True)
         return player
 
     @classmethod

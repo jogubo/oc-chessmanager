@@ -86,5 +86,4 @@ class Player:
                 "birth": self.birth,
                 "civility": self.civility,
                 "rank": self.rank,
-                "id": self.id
                 }
