@@ -1,12 +1,12 @@
 import sys
-from controllers.home_menu_ctrl import HomeMenuCtrl
+from controllers.home_ctrl import HomeCtrl
 
 
 class ApplicationCtrl:
 
     @staticmethod
     def start():
-        controller = HomeMenuCtrl()
+        controller = HomeCtrl.display_menu()
         controller()
 
     @staticmethod
