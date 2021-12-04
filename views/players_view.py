@@ -6,10 +6,10 @@ from utils.functions import clear, prompt
 class PlayersView:
 
     @classmethod
-    def main_display(cls, title=''):
+    def main_display(cls):
         clear()
         print(f"[{APP_NAME}]\n")
-        print(f"{title}\n")
+        print(f"{cls.title}")
 
     @classmethod
     def list(cls, players):
@@ -81,6 +81,7 @@ class PlayersView:
             Returns:
                 Dictionary (dict)
         '''
+        cls.title = "Ajouter un nouveau joueur"
         valid_form = False
         while valid_form is False:
             player = {
