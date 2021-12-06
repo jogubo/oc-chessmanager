@@ -1,7 +1,5 @@
 from models.menu import Menu
 from views.menu_view import MenuView
-from controllers.tournaments_ctrl import TournamentsCtrl
-from controllers.players_ctrl import PlayersCtrl
 
 
 class HomeCtrl:
@@ -12,17 +10,17 @@ class HomeCtrl:
     @classmethod
     def display_menu(cls):
         cls.menu.add(
-                "auto",
+                "1",
                 "Créer un nouveau tournoi",
                 'new_tournament'
                 )
         cls.menu.add(
-                "auto",
+                "2",
                 "Liste des joueurs",
                 'list_players'
                 )
         cls.menu.add(
-                "auto",
+                "3",
                 "Ajouter un nouveau joueur", 'new_player'
                 )
 

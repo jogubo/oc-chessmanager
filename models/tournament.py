@@ -2,13 +2,13 @@ class Tournament:
     def __init__(
             self,
             name,
+            description,
             location,
             players,
             date,
             turns,
             rounds,
-            time,
-            description
+            time
             ):
         self._name = name
         self._location = location

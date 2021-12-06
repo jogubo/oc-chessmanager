@@ -1,7 +1,7 @@
 from utils.database import Database
 from models.tournament import Tournament
 from controllers.players_ctrl import PlayersCtrl
-from views.tournament_form_view import TournamentFormView
+from views.tournaments_view import TournamentsView
 
 
 class TournamentsCtrl:
@@ -27,25 +27,27 @@ class TournamentsCtrl:
 
     @staticmethod
     def create_new():
-        players = PlayersCtrl()
-        new_tournament_form = TournamentFormView("Créer un nouveau tournoi")
-        form = new_tournament_form.new()
-        players = []
+        form = TournamentsView.create_new_tournament()
+        players, ids = [], []
         total_players = form["nb_players"]
         while total_players > 0:
-            player = players.search()
-            players.append((player["id"], 0.0, player["rank"]))
+            player = PlayersCtrl.search_by_name()
+            if player["id"] in ids:
+                continue
+            players.append((player["id"], 0.0, player["rank"], []))
+            ids.append(player["id"])
             total_players -= 1
         tournament = Tournament(
                 form["name"],
+                form["description"],
                 form["location"],
                 players,
-                "date",
+                form["date"],
                 "turns",
                 "rounds",
-                "time",
-                "description"
+                "Blitz",
                 )
         serialized_tournaments = []
         serialized_tournaments.append(tournament.serialize())
         Database.add('tournaments', serialized_tournaments)
+        return 'home'

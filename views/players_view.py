@@ -42,7 +42,8 @@ class PlayersView:
 
     @classmethod
     def set_birth(cls):
-        while True:
+        valid_date = False
+        while not valid_date:
             cls.main_display()
             _input = prompt("Entrez le date de naissance (JJ/MM/AAAA) :")
             try:

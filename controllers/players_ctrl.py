@@ -1,13 +1,12 @@
 from utils. database import Database
 from models.player import Player
 from views.players_view import PlayersView
-#from views.player_form_view import PlayerFormView
 
 
 class PlayersCtrl:
 
     @classmethod
-    def get_list(cls):
+    def get_list(cls) -> None:
         serialized_players = Database.get('players')
         for player in serialized_players:
             player["id"] = player.doc_id
@@ -28,13 +27,14 @@ class PlayersCtrl:
                     id=player_data.doc_id
                 )
 
-    def search(self):
+    @classmethod
+    def search_by_name(cls):
         '''
         Search a player by name
         '''
-        search_result = Database.search('players', self._view.search())
-        players = self.list(search_result)
-        user_choice = self._view.list(players)
+        search_result = Database.search('players', PlayersView.search())
+        players = cls.create_list(search_result)
+        user_choice = PlayersView.list(players)
         player = players[int(user_choice) - 1]
         return player.serialize
 
