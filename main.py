@@ -3,7 +3,7 @@ from controllers.application_ctrl import ApplicationCtrl
 
 def main():
     chessmanager = ApplicationCtrl()
-    chessmanager.start()
+    chessmanager.run()
 
 
 if __name__ == "__main__":

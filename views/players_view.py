@@ -5,6 +5,8 @@ from utils.functions import clear, prompt
 
 class PlayersView:
 
+    title = ''
+
     @classmethod
     def main_display(cls):
         clear()
@@ -23,8 +25,8 @@ class PlayersView:
         return _input
 
     @classmethod
-    def search(self):
-        self.main_display()
+    def search(cls):
+        cls.main_display()
         _input = prompt("Entrez le nom du joueur recherché :").upper()
         return _input
 

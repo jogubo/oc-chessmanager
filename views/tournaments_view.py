@@ -50,17 +50,6 @@ class TournamentsView:
 
     @classmethod
     def set_nb_players(cls):
-        # while True:
-        #     cls.main_display()
-        #     number = prompt("Indiquez le nombre de joueurs pour ce tournoi")
-        #     try:
-        #         number = int(number)
-        #         if number >= 8 and (number % 2) == 0:
-        #              return number
-        #          else:
-        #              continue
-        #      except ValueError:
-        #         continue
         return NUMBER_PLAYERS
 
     @classmethod
@@ -68,6 +57,24 @@ class TournamentsView:
         cls.main_display()
         _input = prompt("Entrez le nom du joueur recherché :").upper()
         return _input
+
+    @classmethod
+    def set_score_match(cls, players):
+        while True:
+            player_1, player_2 = players
+            print(f"[1] - {player_1}")
+            print(f"[2] - {player_2}")
+            print("[E] - Égalité")
+            _input = prompt("Selectionnez le joueur gagnant").upper()
+            if _input == "1":
+                player_1.score += 1.0
+                return 1.0, 0.0
+            elif _input == "2":
+                player_2.score += 1.0
+                return 0.0, 1.0
+            elif _input == "E":
+                player_1.score, player_2.score = 0.5, 0.5
+                return 0.5, 0.5
 
     @classmethod
     def create_new_tournament(cls):

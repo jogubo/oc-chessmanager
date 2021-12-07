@@ -96,7 +96,19 @@ class Tournament:
         Player's data is list:
             [player_id, player_score, player_rank]
         '''
-        players = self.players_data
+        players_data = self.players_data
+
+        players = []
+        for id, data in players_data.items():
+            player = [
+                    id,
+                    data['score'],
+                    data['rank'],
+                    data['history'],
+                    ]
+            players.append(player)
+
+        # players = self.players_data
         SCORE, RANK = 1, 2
         players.sort(key=lambda x: x[SCORE], reverse=True)
         for i in range(0, len(players)):
@@ -106,11 +118,10 @@ class Tournament:
                         temp = players[j]
                         players[j] = players[j+1]
                         players[j+1] = temp
-        self.players_data = players
         return players
 
     def generate_versus(self):
-        players = self.players_data
+        players = self.sort_players()
         median = int(len(players) / 2)
         versus = []
         if len(players[0][3]) == 0:
@@ -119,11 +130,11 @@ class Tournament:
         else:
             i = 1
             while len(players) > 0:
-                PLAYER_1, PLAYER_2 = players[0], players[i]
-                if PLAYER_2[0] in PLAYER_1[3]:
+                player_1, player_2 = players[0], players[i]
+                if player_2[0] in player_1[3]:
                     i += 1
                 else:
-                    versus.append((PLAYER_1[0], PLAYER_2[0]))
+                    versus.append((player_1[0], player_2[0]))
                     del players[i]
                     del players[0]
                     i = 1
@@ -133,5 +144,5 @@ class Tournament:
         return {
                 "name": self.name,
                 "description": self.description,
-                "players": self.players
+                "players_data": self.players_data
                 }

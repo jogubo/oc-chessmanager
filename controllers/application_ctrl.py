@@ -22,18 +22,21 @@ class ApplicationCtrl:
             'new_player': {
                 'title': "Ajouter un nouveau joueur",
                 'controller': PlayersCtrl.create_new
+                },
+            'close_app': {
+                'title': "Fermer l'application",
+                'controller': sys.exit
                 }
             }
 
     def __init__(self):
         self.route = 'home'
+        self.title = self.ROUTES[self.route]['title']
         self.close_app = False
 
-    def start(self):
-        while not self.close_app:
+    def run(self):
+        while True:
             controller_method = self.ROUTES[self.route]['controller']
             next_route = controller_method()
             self.route = next_route
-            if next_route == 'close_app':
-                self.close_app = True
-                sys.exit()
+            self.title = self.ROUTES[next_route]['title']

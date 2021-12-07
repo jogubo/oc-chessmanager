@@ -6,7 +6,7 @@ from views.players_view import PlayersView
 class PlayersCtrl:
 
     @classmethod
-    def get_list(cls) -> None:
+    def get_list(cls):
         serialized_players = Database.get('players')
         for player in serialized_players:
             player["id"] = player.doc_id
@@ -16,16 +16,17 @@ class PlayersCtrl:
         return 'home'
 
     @staticmethod
-    def get_player(id):
-        player_data = Database.get('players', id)
-        return Player(
-                    first_name=player_data["first_name"],
-                    last_name=player_data["last_name"],
-                    birth=player_data["birth"],
-                    civility=player_data["civility"],
-                    rank=player_data["rank"],
-                    id=player_data.doc_id
+    def get_player(player_id):
+        data = Database.get('players', player_id)
+        player = Player(
+                    first_name=data["first_name"],
+                    last_name=data["last_name"],
+                    birth=data["birth"],
+                    civility=data["civility"],
+                    rank=data["rank"],
+                    id=data.doc_id
                 )
+        return player
 
     @classmethod
     def search_by_name(cls):
@@ -36,7 +37,7 @@ class PlayersCtrl:
         players = cls.create_list(search_result)
         user_choice = PlayersView.list(players)
         player = players[int(user_choice) - 1]
-        return player.serialize
+        return player
 
     @classmethod
     def create_list(cls, results):
