@@ -15,13 +15,23 @@ class TournamentsCtrl:
                 "date",
                 "turns",
                 "rounds",
-                "time"
+                "time",
+                {}
                 )
         self._players = {}
         for player_id, player_data in self._tournament.players_data.items():
             self._players[player_id] = PlayersCtrl.get_player(int(player_id))
             self._players[player_id].score = player_data['score']
             self._players[player_id].rank = player_data['rank']
+
+    def list_matchs(self):
+        matchs_list = self._tournament.generate_versus()
+        matchs = []
+        for match in matchs_list:
+            player_1, player_2 = match
+            players = (self._players[player_1], self._players[player_2])
+            matchs.append(players)
+        TournamentsView.display_matchs_list(matchs)
 
     def set_score(self):
         matchs = self._tournament.generate_versus()
@@ -31,10 +41,11 @@ class TournamentsCtrl:
                     self._players[player_1],
                     self._players[player_2]
                     ]
-            TournamentsView.set_score_match(players)
+            match = TournamentsView.set_score_match(4, players)
 
         print(self._players['6'].score)
 
+    @staticmethod
     def create_new():
         form = TournamentsView.create_new_tournament()
         players, ids = {}, []

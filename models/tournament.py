@@ -7,8 +7,9 @@ class Tournament:
             players,
             date,
             turns,
-            rounds,
-            time
+            rounds=4,
+            time=None,
+            matchs={}
             ):
         self._name = name
         self._location = location
@@ -18,6 +19,8 @@ class Tournament:
         self._rounds = rounds
         self._time = time
         self._description = description
+        self._match = matchs
+        self._current_round = 1 #self._rounds - (len(self._matchs) + 1)
 
     def __repr__(self):
         return f"""
