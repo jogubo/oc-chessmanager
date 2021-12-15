@@ -6,10 +6,9 @@ class Tournament:
             location,
             players,
             date,
-            turns,
+            turns=[],
             rounds=4,
             time=None,
-            matchs={}
             ):
         self._name = name
         self._location = location
@@ -19,8 +18,6 @@ class Tournament:
         self._rounds = rounds
         self._time = time
         self._description = description
-        self._match = matchs
-        self._current_round = 1 #self._rounds - (len(self._matchs) + 1)
 
     def __repr__(self):
         return f"""
@@ -94,6 +91,11 @@ class Tournament:
     def description(self, text):
         self._description = text
 
+    @property
+    def current_round(self):
+        print(self.rounds)
+        return len(self.turns) + 1
+
     def sort_players(self):
         '''
         Player's data is list:
@@ -111,7 +113,6 @@ class Tournament:
                     ]
             players.append(player)
 
-        # players = self.players_data
         SCORE, RANK = 1, 2
         players.sort(key=lambda x: x[SCORE], reverse=True)
         for i in range(0, len(players)):
@@ -127,25 +128,28 @@ class Tournament:
         players = self.sort_players()
         median = int(len(players) / 2)
         versus = []
+        ID, HISTORY = 0, 3
         if len(players[0][3]) == 0:
             for i in range(median):
                 versus.append((players[i][0], players[i+median][0]))
         else:
             i = 1
             while len(players) > 0:
-                player_1, player_2 = players[0], players[i]
-                if player_2[0] in player_1[3]:
+                player_1, player_2 = players[ID], players[i]
+                if player_2[ID] in player_1[HISTORY]:
                     i += 1
                 else:
-                    versus.append((player_1[0], player_2[0]))
+                    versus.append((player_1[ID], player_2[ID]))
                     del players[i]
-                    del players[0]
+                    del players[ID]
                     i = 1
         return versus
 
     def serialize(self):
         return {
-                "name": self.name,
-                "description": self.description,
-                "players_data": self.players_data
+                'name': self.name,
+                'description': self.description,
+                'players_data': self.players_data,
+                'turns': self.turns,
+                'rounds': self.rounds
                 }

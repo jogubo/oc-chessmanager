@@ -59,10 +59,15 @@ class TournamentsView:
         return _input
 
     @classmethod
-    def display_matchs_list(cls, matchs):
+    def display_matchs_list(cls, round, matchs):
+        if round == 1:
+            round = "1er"
+        else:
+            round = f"{round}ème"
+        print(f"Liste des matchs pour le {round} tour:\n")
         for players in matchs:
             player_1, player_2 = players
-            print(f"{player_1.full_name}  vs {player_2.full_name}\n")
+            print(f"  -  {player_1.full_name}  vs {player_2.full_name}")
 
     @classmethod
     def set_score_match(cls, round, players):
@@ -75,15 +80,11 @@ class TournamentsView:
             print("[E] - Égalité")
             _input = prompt("Selectionnez le joueur gagnant").upper()
             if _input == "1":
-                player_1.score += 1.0
-                return ([player_1.id, 1.0], [player_2.id, 0.0])
+                return (1.0, 0.0)
             elif _input == "2":
-                player_2.score += 1.0
-                return ([player_1.id, 0.0], [player_2.id, 1.0])
+                return (0.0, 1.0)
             elif _input == "E":
-                player_1.score += 0.5
-                player_2.score += 0.5
-                return ([player_1.id, 0.5], [player_2.id, 0.5])
+                return (0.5, 0.5)
 
     @classmethod
     def create_new_tournament(cls):

@@ -25,6 +25,11 @@ class Database:
         table.insert_multiple(serialized)
 
     @classmethod
+    def update(cls, table, key, value, doc_ids):
+        table = cls.table(table)
+        table.update({key: value}, doc_ids=doc_ids)
+
+    @classmethod
     def search(cls, table, search):
         table = cls.table(table)
         q = Query()

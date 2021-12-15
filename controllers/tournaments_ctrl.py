@@ -13,10 +13,9 @@ class TournamentsCtrl:
                 "location",
                 data["players_data"],
                 "date",
-                "turns",
-                "rounds",
+                data['turns'],
+                data['rounds'],
                 "time",
-                {}
                 )
         self._players = {}
         for player_id, player_data in self._tournament.players_data.items():
@@ -24,26 +23,46 @@ class TournamentsCtrl:
             self._players[player_id].score = player_data['score']
             self._players[player_id].rank = player_data['rank']
 
+    def resume_match(self):
+        pass
+
     def list_matchs(self):
         matchs_list = self._tournament.generate_versus()
+        round = self._tournament.current_round
         matchs = []
         for match in matchs_list:
             player_1, player_2 = match
             players = (self._players[player_1], self._players[player_2])
             matchs.append(players)
-        TournamentsView.display_matchs_list(matchs)
+        TournamentsView.display_matchs_list(round, matchs)
 
     def set_score(self):
+        PLAYER_1, PLAYER_2 = 0, 1
         matchs = self._tournament.generate_versus()
+        matchs_results = []
         for match in matchs:
             player_1, player_2 = match
-            players = [
-                    self._players[player_1],
-                    self._players[player_2]
-                    ]
-            match = TournamentsView.set_score_match(4, players)
-
-        print(self._players['6'].score)
+            player_1 = self._players[player_1]
+            player_2 = self._players[player_2]
+            players = (player_1.full_name, player_2.full_name)
+            score = TournamentsView.set_score_match(4, players)
+            player_1.score += score[PLAYER_1]
+            player_2.score += score[PLAYER_2]
+            match = (
+                    [player_1.id, score[PLAYER_1]],
+                    [player_2.id, score[PLAYER_2]]
+                    )
+            matchs_results.append(match)
+        round = {
+                'name': 'Hello World',
+                'date': '12/12/2012',
+                'matchs': matchs_results
+                }
+        print(self._tournament.turns)
+        rounds = self._tournament.turns
+        rounds.append(round)
+        self._tournament.turns = rounds
+        Database.update('tournaments', 'turns', rounds, [5])
 
     @staticmethod
     def create_new():
@@ -68,8 +87,8 @@ class TournamentsCtrl:
                 form["location"],
                 players,
                 form["date"],
-                "turns",
-                "rounds",
+                [],
+                4,
                 "Blitz",
                 )
         serialized_tournaments = []
