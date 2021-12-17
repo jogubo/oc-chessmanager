@@ -15,14 +15,24 @@ class PlayersView:
 
     @classmethod
     def list(cls, players):
-        cls.title = "Liste des joueurs\n"
-        cls.main_display()
-        i = 1
-        for player in players:
-            print(f"[{i}] - {player}")
-            i += 1
-        _input = prompt('')
-        return _input
+        while True:
+            cls.title = "Liste des joueurs\n"
+            cls.main_display()
+            i = 1
+            for player in players:
+                print(f"[{i}] - {player}")
+                i += 1
+            _input = prompt('')
+            try:
+                user_choice = int(_input)
+                if user_choice >= 1 and user_choice <= len(players):
+                    user_choice -= 1
+                else:
+                    continue
+
+            except ValueError:
+                pass
+            return user_choice
 
     @classmethod
     def search(cls):

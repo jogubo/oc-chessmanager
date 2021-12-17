@@ -17,7 +17,7 @@ class ApplicationCtrl:
                 },
             'list_players': {
                 'title': "Liste des joueurs",
-                'controller': PlayersCtrl.get_list
+                'controller': PlayersCtrl.get_list_players
                 },
             'new_player': {
                 'title': "Ajouter un nouveau joueur",

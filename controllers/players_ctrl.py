@@ -5,28 +5,41 @@ from views.players_view import PlayersView
 
 class PlayersCtrl:
 
-    @classmethod
-    def get_list(cls):
-        serialized_players = Database.get('players')
-        for player in serialized_players:
-            player["id"] = player.doc_id
-        players = cls.create_list(serialized_players)
-        print(serialized_players)
-        PlayersView.list(players)
-        return 'home'
-
     @staticmethod
-    def get_player(player_id):
-        data = Database.get('players', player_id)
+    def create_player(serialized_player):
         player = Player(
-                    first_name=data["first_name"],
-                    last_name=data["last_name"],
-                    birth=data["birth"],
-                    civility=data["civility"],
-                    rank=data["rank"],
-                    id=data.doc_id
+                    first_name=serialized_player["first_name"],
+                    last_name=serialized_player["last_name"],
+                    birth=serialized_player["birth"],
+                    civility=serialized_player["civility"],
+                    rank=serialized_player["rank"],
+                    id=serialized_player['id']
                 )
         return player
+
+    @classmethod
+    def get_player(cls, player_id):
+        player_data = Database.get('players', player_id)
+        player_data['id'] = player_data.doc_id
+        player = cls.create_player(player_data)
+
+    @classmethod
+    def get_list_players(cls, list_ids=None):
+        if list_ids is None:
+            players_data = Database.get('players')
+        players = []
+        for player_data in players_data:
+            player = {}
+            player_data['id'] = player_data.doc_id
+            player = cls.create_player(player_data)
+            players.append(player)
+        # View
+        players_infos = []
+        for player in players:
+            players_infos.append(player.full_name)
+        user_choice = players[PlayersView.list(players_infos)]
+        print(user_choice)
+        return 'home'
 
     @classmethod
     def search_by_name(cls):
@@ -44,14 +57,7 @@ class PlayersCtrl:
         players = []
         results = results
         for player in results:
-            player = Player(
-                    first_name=player["first_name"],
-                    last_name=player["last_name"],
-                    birth=player["birth"],
-                    civility=player["civility"],
-                    rank=player["rank"],
-                    id=player["id"]
-                    )
+            player = Database.get(player.doc_id)
             players.append(player)
         return players
 
