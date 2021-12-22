@@ -19,6 +19,14 @@ class ApplicationCtrl:
                 'title': "Liste des joueurs",
                 'controller': PlayersCtrl.get_list_players
                 },
+            'get_player': {
+                'title': "Fiche du joueur",
+                'controller': PlayersCtrl.get_player
+                },
+            'change_player_rank': {
+                'title': "Modifier le classement du joueur",
+                'controller': PlayersCtrl.change_player_rank
+                },
             'new_player': {
                 'title': "Ajouter un nouveau joueur",
                 'controller': PlayersCtrl.create_new
@@ -31,12 +39,20 @@ class ApplicationCtrl:
 
     def __init__(self):
         self.route = 'home'
+        self.parameters = None
         self.title = self.ROUTES[self.route]['title']
-        self.close_app = False
+        self.close_app = None
+
+    def controller(self, parameters):
+        kwargs = parameters
+        controller_method = self.ROUTES[self.route]['controller']
+        if kwargs is None:
+            next_route, next_parameters = controller_method()
+        else:
+            next_route, next_parameters = controller_method(**kwargs)
+        self.route = next_route
+        self. parameters = next_parameters
 
     def run(self):
         while True:
-            controller_method = self.ROUTES[self.route]['controller']
-            next_route = controller_method()
-            self.route = next_route
-            self.title = self.ROUTES[next_route]['title']
+            self.controller(self.parameters) 

@@ -36,6 +36,8 @@ class Database:
         search = table.search(q.last_name == search)
         results = []
         for item in search:
-            item["id"] = item.doc_id
-            results.append(item)
+            id = item.doc_id
+            results.append(id)
+            print(item, id)
+            print(results)
         return results

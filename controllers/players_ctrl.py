@@ -22,44 +22,78 @@ class PlayersCtrl:
         player_data = Database.get('players', player_id)
         player_data['id'] = player_data.doc_id
         player = cls.create_player(player_data)
+        user_choice = PlayersView.display_player(player.infos)
+        if user_choice == 'change_player_rank':
+            return user_choice, {'player': player} 
+        else:
+            return user_choice
 
     @classmethod
-    def get_list_players(cls, list_ids=None):
-        if list_ids is None:
-            players_data = Database.get('players')
-        players = []
-        for player_data in players_data:
-            player = {}
-            player_data['id'] = player_data.doc_id
-            player = cls.create_player(player_data)
-            players.append(player)
-        # View
-        players_infos = []
-        for player in players:
-            players_infos.append(player.full_name)
-        user_choice = players[PlayersView.list(players_infos)]
-        print(user_choice)
-        return 'home'
+    def change_player_rank(cls, player):
+        player = player
+        player_name = player.full_name
+        player_rank = player.rank
+        new_rank = PlayersView.set_rank(player_name, player_rank)
+        Database.update('players', 'rank', new_rank, [player.id])
+        return 'list_players', None
 
     @classmethod
     def search_by_name(cls):
         '''
         Search a player by name
         '''
-        search_result = Database.search('players', PlayersView.search())
-        players = cls.create_list(search_result)
+        players_id = Database.search('players', PlayersView.search())
+        #players = cls.create_list(search_result)
+        players_infos = []
+        for player_infos in player_id:
+            pass
         user_choice = PlayersView.list(players)
         player = players[int(user_choice) - 1]
         return player
 
     @classmethod
-    def create_list(cls, results):
+    def list_players(cls, list_ids='all'):
         players = []
-        results = results
-        for player in results:
-            player = Database.get(player.doc_id)
+        list_ids = list_ids
+        if list_ids == 'all':
+            list_ids = []
+            serialized_players = Database.get('players')
+            for player in serialized_players:
+                list_ids.append(player.doc_id)
+        for id in list_ids:
+            serialized_player = Database.get('players', id)
+            serialized_player['id'] = id
+            player = cls.create_player(serialized_player)
             players.append(player)
         return players
+
+    @classmethod
+    def get_list_players(cls, list_ids='all'):
+        list_ids = list_ids
+        players = cls.list_players(list_ids)
+        players_infos = cls.format_data(players, id=True, name=True)
+        user_choice = PlayersView.list(players_infos)
+        return user_choice
+
+    @classmethod
+    def format_data(cls, players, id=False, name=False, rank=False):
+        players, id, name, rank = players, id, name, rank
+        if isinstance(players, int):
+            players = [players]
+        players_infos = []
+        for player in players:
+            infos = {}
+            if id:
+                infos['id'] = player.id
+            if name:
+                infos['name'] = player.full_name
+            if rank:
+                infos['rank'] = player.rank
+            players_infos.append(infos)
+        if len(players) == 1:
+            return players_infos[0]
+        else:
+            return players_infos
 
     @staticmethod
     def create_new():

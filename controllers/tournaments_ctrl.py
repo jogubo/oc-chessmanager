@@ -2,6 +2,7 @@ from utils.database import Database
 from models.tournament import Tournament
 from controllers.players_ctrl import PlayersCtrl
 from views.tournaments_view import TournamentsView
+from views.players_view import PlayersView
 
 
 class TournamentsCtrl:
@@ -73,7 +74,6 @@ class TournamentsCtrl:
         total_players = form["nb_players"]
         while total_players > 0:
             player = PlayersCtrl.search_by_name()
-            print(player.id)
             if player.id in ids:
                 continue
             players[player.id] = {

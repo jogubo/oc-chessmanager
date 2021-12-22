@@ -79,6 +79,15 @@ class Player:
         return self._id
 
     @property
+    def infos(self):
+        infos =  (
+                f"Nom: {self.full_name}\n"
+                f"Date de naissance: {self.birth}\n"
+                f"Classement: {self.rank}"
+                )
+        return infos
+
+    @property
     def serialize(self):
         return {
                 "first_name": self.first_name,

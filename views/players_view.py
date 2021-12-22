@@ -14,24 +14,57 @@ class PlayersView:
         print(f"{cls.title}")
 
     @classmethod
-    def list(cls, players):
+    def display_player(cls, player_infos):
+        cls.main_display()
+        print(player_infos)
+        _input = prompt("[M]odifier le classement | [R]etour à la liste des joueurs").upper()     
+        if _input == 'M':
+            return 'change_player_rank'
+        elif _input == 'R':
+            return 'list_players', None
+
+    @classmethod
+    def list(cls, players, disable_route=False):
+        ''' 
+        players is list :
+        players = [
+                {
+                    'id': player_id,
+                    'name': player_name
+                    }
+                ]
+            '''
         while True:
             cls.title = "Liste des joueurs\n"
             cls.main_display()
             i = 1
+            play = {}
             for player in players:
-                print(f"[{i}] - {player}")
+                print(f"[{i}] - {player['name']}")
                 i += 1
-            _input = prompt('')
+            text = "Selectionnez un joueur"
+            if not disable_route:
+                _input = prompt(f"{text} pour afficher plus d'infos\n" \
+                        "[M]enu principal | [Q]uitter le programme")
+            else:
+                _input = prompt(f"{text} :")
             try:
                 user_choice = int(_input)
-                if user_choice >= 1 and user_choice <= len(players):
-                    user_choice -= 1
+            except:
+                user_choice = _input.upper()
+            if user_choice == 'Q' and not disable_route:
+                return 'close_app', None
+            elif user_choice == 'M' and not disable_route:
+                return 'home', None
+            elif user_choice >= 1 and user_choice <= len(players):
+                user_choice -= 1
+                player_id = {'player_id': players[user_choice]['id']}
+                if not disable_route:
+                    return 'get_player', player_id
                 else:
-                    continue
-
-            except ValueError:
-                pass
+                    return player_id
+            else:
+                continue
             return user_choice
 
     @classmethod
@@ -86,6 +119,25 @@ class PlayersView:
             else:
                 continue
         return civility
+
+    @classmethod
+    def set_rank(cls, player_name, player_rank=None):
+        valid = False
+        while not valid:
+            cls.main_display()
+            print(f"{player_name}")
+            print(f"Classement actuel: {player_rank}")
+            _input = prompt("Entrez le nouveau classement du joueur:")
+            try:
+                _input = int(_input)
+                if _input > 0:
+                    infos = f"{player_name}\n" \
+                            f"Rang actuel: {player_rank}\n" \
+                            f"Nouveau Rang: {str(_input)}"
+                    valid = cls.check(infos, True)
+            except ValueError:
+                continue
+        return _input
 
     @classmethod
     def create_new_player(cls):
