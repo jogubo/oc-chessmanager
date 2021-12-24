@@ -17,7 +17,7 @@ class ApplicationCtrl:
                 },
             'list_players': {
                 'title': "Liste des joueurs",
-                'controller': PlayersCtrl.get_list_players
+                'controller': PlayersCtrl.list_players
                 },
             'get_player': {
                 'title': "Fiche du joueur",
@@ -44,15 +44,16 @@ class ApplicationCtrl:
         self.close_app = None
 
     def controller(self, parameters):
-        kwargs = parameters
+        parameters = parameters
         controller_method = self.ROUTES[self.route]['controller']
-        if kwargs is None:
+        if parameters is None:
             next_route, next_parameters = controller_method()
         else:
+            kwargs = parameters
             next_route, next_parameters = controller_method(**kwargs)
         self.route = next_route
         self. parameters = next_parameters
 
     def run(self):
         while True:
-            self.controller(self.parameters) 
+            self.controller(self.parameters)

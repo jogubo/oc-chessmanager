@@ -80,7 +80,7 @@ class Player:
 
     @property
     def infos(self):
-        infos =  (
+        infos = (
                 f"Nom: {self.full_name}\n"
                 f"Date de naissance: {self.birth}\n"
                 f"Classement: {self.rank}"

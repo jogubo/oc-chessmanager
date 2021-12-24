@@ -52,9 +52,9 @@ class PlayersCtrl:
         return player
 
     @classmethod
-    def list_players(cls, list_ids='all'):
-        players = []
+    def list_players(cls, list_ids='all', view=None):
         list_ids = list_ids
+        players = []
         if list_ids == 'all':
             list_ids = []
             serialized_players = Database.get('players')
@@ -65,15 +65,14 @@ class PlayersCtrl:
             serialized_player['id'] = id
             player = cls.create_player(serialized_player)
             players.append(player)
-        return players
-
-    @classmethod
-    def get_list_players(cls, list_ids='all'):
-        list_ids = list_ids
-        players = cls.list_players(list_ids)
         players_infos = cls.format_data(players, id=True, name=True)
         user_choice = PlayersView.list(players_infos)
-        return user_choice
+        if isinstance(user_choice, int):
+            return 'get_player', {'player_id': user_choice}
+        elif user_choice == 'M':
+            return 'home', None
+        elif user_choice == 'Q':
+            return 'close_app', None
 
     @classmethod
     def format_data(cls, players, id=False, name=False, rank=False):

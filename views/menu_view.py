@@ -23,5 +23,4 @@ class MenuView:
             if choice in self.menu.entries:
                 return self.menu.entries[choice]
             else:
-                print(type(self.menu.entries))
-                print(self.menu.entries)
+                continue

@@ -17,7 +17,8 @@ class PlayersView:
     def display_player(cls, player_infos):
         cls.main_display()
         print(player_infos)
-        _input = prompt("[M]odifier le classement | [R]etour à la liste des joueurs").upper()     
+        _input = prompt("[M]odifier le classement | "
+                        "[R]etour à la liste des joueurs").upper()
         if _input == 'M':
             return 'change_player_rank'
         elif _input == 'R':
@@ -25,47 +26,35 @@ class PlayersView:
 
     @classmethod
     def list(cls, players, disable_route=False):
-        ''' 
+        '''
         players is list :
-        players = [
-                {
-                    'id': player_id,
-                    'name': player_name
-                    }
-                ]
-            '''
+        players = [{'id': player_id, 'name': player_name}]
+        '''
         while True:
             cls.title = "Liste des joueurs\n"
             cls.main_display()
             i = 1
-            play = {}
             for player in players:
                 print(f"[{i}] - {player['name']}")
                 i += 1
             text = "Selectionnez un joueur"
+            choices = ['M', 'Q']
             if not disable_route:
-                _input = prompt(f"{text} pour afficher plus d'infos\n" \
-                        "[M]enu principal | [Q]uitter le programme")
+                _input = prompt(f"{text} pour afficher plus d'infos\n"
+                                "[M]enu principal | [Q]uitter le programme")
             else:
                 _input = prompt(f"{text} :")
             try:
                 user_choice = int(_input)
-            except:
+            except ValueError:
                 user_choice = _input.upper()
-            if user_choice == 'Q' and not disable_route:
-                return 'close_app', None
-            elif user_choice == 'M' and not disable_route:
-                return 'home', None
+            if user_choice in choices:
+                return user_choice
             elif user_choice >= 1 and user_choice <= len(players):
-                user_choice -= 1
-                player_id = {'player_id': players[user_choice]['id']}
-                if not disable_route:
-                    return 'get_player', player_id
-                else:
-                    return player_id
+                player_id = user_choice
+                return player_id
             else:
                 continue
-            return user_choice
 
     @classmethod
     def search(cls):

@@ -10,25 +10,25 @@ class HomeCtrl:
     @classmethod
     def display_menu(cls):
         cls.menu.add(
-                "1",
+                '1',
                 "Créer un nouveau tournoi",
-                ('new_tournament', None)
+                'new_tournament'
                 )
         cls.menu.add(
-                "2",
+                '2',
                 "Liste des joueurs",
-                ('list_players', None)
+                'list_players'
                 )
         cls.menu.add(
-                "3",
+                '3',
                 "Ajouter un nouveau joueur",
-                ('new_player', None)
+                'new_player'
                 )
 
         cls.menu.add(
-                "Q",
+                'Q',
                 "Quitter",
-                ('close_app', None)
+                'close_app'
                 )
         user_choice = cls.view.user_choice()
-        return user_choice.controller
+        return user_choice.controller, None

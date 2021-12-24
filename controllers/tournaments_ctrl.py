@@ -25,7 +25,6 @@ class TournamentsCtrl:
             self._players[player_id].rank = player_data['rank']
 
     def resume_match(self):
-        current_round = self._tournament.current_round
         while self._tournament.current_round <= self._tournament.rounds:
             self.set_score()
 
@@ -48,7 +47,10 @@ class TournamentsCtrl:
             player_1 = self._players[player_1]
             player_2 = self._players[player_2]
             players = (player_1.full_name, player_2.full_name)
-            score = TournamentsView.set_score_match(self._tournament.current_round, players)
+            score = TournamentsView.set_score_match(
+                    self._tournament.current_round,
+                    players
+                    )
             player_1.score += score[PLAYER_1]
             player_2.score += score[PLAYER_2]
             match = (
