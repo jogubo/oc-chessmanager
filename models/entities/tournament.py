@@ -159,7 +159,10 @@ class Tournament:
         return {
                 'name': self.name,
                 'description': self.description,
+                'date': self.date,
+                'location': self.location,
                 'players_data': self.players_data,
                 'turns': self.turns,
-                'rounds': self.rounds
+                'rounds': self.rounds,
+                'time': self.time
                 }

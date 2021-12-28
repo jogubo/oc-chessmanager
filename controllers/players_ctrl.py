@@ -27,10 +27,15 @@ class PlayersCtrl:
     @classmethod
     def list_players(cls, list_ids='all', display=None):
         players = PlayersDAO.get_list_players(list_ids)
-        players_infos = PlayersDAO.format_data(players, id=True, name=True)
+        players_infos = PlayersDAO.format_data(
+                players=players,
+                id=True,
+                name=True,
+                list=True
+                )
         user_choice = PlayersView.list(players_infos, display)
         if isinstance(user_choice, int):
-            return 'get_player', {'player_id': user_choice, 'display': True}
+            return 'get_player', {'player_id': user_choice}
         elif user_choice == 'M':
             return 'home', None
         elif user_choice == 'A':
@@ -43,9 +48,8 @@ class PlayersCtrl:
         '''
         Search a player by name
         '''
-        players_ids = []
-        while len(players_ids) < 1:
-            players_ids = Database.search('players', PlayersView.search())
+        search_request = PlayersView.search()
+        players_ids = PlayersDAO.search_player_by_name(search_request)
         user_choice = cls.list_players(players_ids, display='minimal')
         return user_choice[1]['player_id']
 

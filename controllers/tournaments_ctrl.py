@@ -1,64 +1,17 @@
 from utils.database import Database
+from models.dao.tournaments_dao import TournamentsDAO
 from models.entities.tournament import Tournament
+from models.dao.players_dao import PlayersDAO
 from controllers.players_ctrl import PlayersCtrl
 from views.tournaments_view import TournamentsView
 from views.players_view import PlayersView
 
 
 class TournamentsCtrl:
-    def __init__(self, tournament_id, players=True):
-        data = Database.get('tournaments', tournament_id)
-        self._tournament = Tournament(
-                data["name"],
-                data["description"],
-                "location",
-                data["players_data"],
-                "date",
-                data['turns'],
-                data['rounds'],
-                "time",
-                id=tournament_id
-                )
-        if players:
-            self._players = {}
-            players_data = self._tournament.players_data.items()
-            for player_id, player_data in players_data.items():
-                self._players[player_id] = PlayersCtrl.get_player(
-                        int(player_id)
-                        )
-                self._players[player_id].score = player_data['score']
-                self._players[player_id].rank = player_data['rank']
-
-    @classmethod
-    def create_tournament(cls, serialized_tournament):
-        tournament = Tournament(
-                name=serialized_tournament["name"],
-                description=serialized_tournament["description"],
-                location="location",
-                players_data=serialized_tournament["players_data"],
-                date="date",
-                turns=serialized_tournament['turns'],
-                rounds=serialized_tournament['rounds'],
-                time="time",
-                id=serialized_tournament['id']
-                )
-        return tournament
-
-    @classmethod
-    def get_tournament(cls, tournament_id, players=True):
-        tournament_data = Database.get('tournaments', tournament_id)
-        tournament_data['id'] = tournament_data.doc_id
-        tournament = cls.create_tournament(tournament_data)
-        if players:
-            players = {}
-            for player_id, player_data in tournament.players_data.items():
-                players[player_id] = PlayersCtrl.get_player(
-                        int(player_id)
-                        )
-                players[player_id].score = player_data['score']
-                players[player_id].rank = player_data['rank']
-            return 'tournament', {'tournament': tournament, 'players': players}
-        return 'tournament', {'tournament': tournament}
+    def __init__(self, tournament_id):
+        tournament = TournamentsDAO.get_tournament_by_id(tournament_id)
+        players = TournamentsDAO.get_players_of_the_tournament(tournament)
+        self.tournament, self.players = tournament, players
 
     @classmethod
     def list_tournaments(cls, list_ids='all', display=False):
@@ -135,51 +88,25 @@ class TournamentsCtrl:
         self._tournament.turns = rounds
         Database.update('tournaments', 'turns', rounds, [5])
 
-    @classmethod
-    def format_data(cls, tournaments, id=False, name=False):
-        tournaments, id, name = tournaments, id, name
-        if isinstance(tournaments, int):
-            tournaments = [tournaments]
-        tournaments_infos = []
-        for tournament in tournaments:
-            infos = {}
-            if id:
-                infos['id'] = tournament.id
-            if name:
-                infos['name'] = tournament.full_name
-            tournaments_infos.append(infos)
-        if len(tournaments) == 1:
-            return tournaments_infos[0]
-        else:
-            return tournaments_infos
-
     @staticmethod
     def create_new():
-        form = TournamentsView.create_new_tournament()
-        players, ids = {}, []
-        total_players = form["nb_players"]
+        new_tournament_form = TournamentsView.create_new_tournament()
+        players = {}
+        total_players = new_tournament_form["nb_players"]
         while total_players > 0:
-            player = PlayersCtrl.search_by_name()
-            if player.id in ids:
-                continue
-            players[player.id] = {
-                    'score': 0.0,
-                    'rank': player.rank,
-                    'history': []
-                    }
-            ids.append(player.id)
-            total_players -= 1
-        tournament = Tournament(
-                form["name"],
-                form["description"],
-                form["location"],
-                players,
-                form["date"],
-                [],
-                4,
-                "Blitz",
-                )
-        serialized_tournaments = []
-        serialized_tournaments.append(tournament.serialize())
-        Database.add('tournaments', serialized_tournaments)
+            search_player = PlayersCtrl.search_by_name()
+            player = PlayersDAO.get_player_by_id(search_player)
+            if player.id not in players:
+                players[player.id] = {
+                        'score': 0.0,
+                        'rank': player.rank,
+                        'history': []
+                        }
+                total_players -= 1
+        new_tournament_form['players'] = players
+        new_tournament_form['turns'] = []
+        new_tournament_form['rounds'] = 4
+        new_tournament_form['time'] = 'Blitz'
+        tournament = TournamentsDAO.create_tournament(new_tournament_form)
+        TournamentsDAO.add_tournament_in_db(tournament)
         return 'home'

@@ -32,16 +32,27 @@ class PlayersDAO:
             players_data = Database.get('players')
             for player in players_data:
                 list_ids.append(player.doc_id)
+        elif isinstance(list_ids, int):
+            list_ids = [list_ids]
         for id in list_ids:
             player = cls.get_player_by_id(player_id=id)
             players.append(player)
         return players
 
     @classmethod
-    def format_data(cls, players, id=False, name=False, rank=False):
+    def search_player_by_name(cls, name_request):
+        players_ids = []
+        while len(players_ids) < 1:
+            players_ids = Database.search('players', name_request)
+        return players_ids
+
+    @staticmethod
+    def format_data(players, id=False, name=False, rank=False, list=False):
         players, id, name, rank = players, id, name, rank
+        single_id = False
         if isinstance(players, int):
             players = [players]
+            single_id = True
         players_infos = []
         for player in players:
             infos = {}
@@ -52,7 +63,7 @@ class PlayersDAO:
             if rank:
                 infos['rank'] = player.rank
             players_infos.append(infos)
-        if len(players) == 1:
+        if single_id and not list:
             return players_infos[0]
         else:
             return players_infos

@@ -1,5 +1,5 @@
 from controllers.players_ctrl import PlayersCtrl
-from models.match import Match
+from models.entities.match import Match
 from utils.database import Database
 
 
