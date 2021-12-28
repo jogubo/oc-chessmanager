@@ -12,6 +12,38 @@ class TournamentsView:
         print(f"{cls.title}\n")
 
     @classmethod
+    def list(cls, tournaments_infos, display='all'):
+        '''
+        tournments_infos = [{'id': tournament_id, 'name': tournament_name}]
+        '''
+        while True:
+            cls.title = "Liste des tournois\n"
+            cls.main_display()
+            i, choices = 1, ['A', 'M', 'Q']
+            for tournament in tournaments_infos:
+                print(f"[{i}] - {tournament['name']}")
+                choices.append(i)
+                i += 1
+            text = "Selectionnez un tournoi"
+            if display == 'all':
+                _input = prompt(f"{text} pour afficher plus d'infos\n"
+                                "[A]jouter un joueur | [M]enu principal | "
+                                "[Q]uitter le programme")
+            elif display == 'minimal':
+                _input = prompt(f"{text} :")
+            try:
+                user_choice = int(_input)
+            except ValueError:
+                user_choice = _input.upper()
+            if user_choice in choices:
+                if isinstance(user_choice, int):
+                    return tournaments_infos[user_choice - 1]['id']
+                else:
+                    return user_choice
+            else:
+                continue
+
+    @classmethod
     def set_name(cls):
         cls.main_display()
         name = prompt("Entrez le nom du tournoi :").title()

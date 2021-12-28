@@ -1,4 +1,4 @@
-from models.menu import Menu
+from models.entities.menu import Menu
 from views.menu_view import MenuView
 
 
@@ -11,24 +11,29 @@ class HomeCtrl:
     def display_menu(cls):
         cls.menu.add(
                 '1',
-                "Créer un nouveau tournoi",
-                'new_tournament'
+                "Liste des tournois",
+                ('list_tournaments', {'display': 'all'})
                 )
         cls.menu.add(
                 '2',
-                "Liste des joueurs",
-                'list_players'
+                "Créer un nouveau tournoi",
+                ('new_tournament', None)
                 )
         cls.menu.add(
                 '3',
+                "Liste des joueurs",
+                ('list_players', {'display': 'all'})
+                )
+        cls.menu.add(
+                '4',
                 "Ajouter un nouveau joueur",
-                'new_player'
+                ('new_player', None)
                 )
 
         cls.menu.add(
                 'Q',
                 "Quitter",
-                'close_app'
+                ('close_app', None)
                 )
         user_choice = cls.view.user_choice()
-        return user_choice.controller, None
+        return user_choice.controller

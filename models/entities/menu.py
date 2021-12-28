@@ -1,4 +1,4 @@
-from models.menu_entry import MenuEntry
+from models.entities.menu_entry import MenuEntry
 
 
 class Menu:

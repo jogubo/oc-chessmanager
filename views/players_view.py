@@ -17,15 +17,14 @@ class PlayersView:
     def display_player(cls, player_infos):
         cls.main_display()
         print(player_infos)
+        choices = ['M', 'R']
         _input = prompt("[M]odifier le classement | "
                         "[R]etour à la liste des joueurs").upper()
-        if _input == 'M':
-            return 'change_player_rank'
-        elif _input == 'R':
-            return 'list_players', None
+        if _input in choices:
+            return _input
 
     @classmethod
-    def list(cls, players, disable_route=False):
+    def list(cls, players, display='all'):
         '''
         players is list :
         players = [{'id': player_id, 'name': player_name}]
@@ -33,26 +32,27 @@ class PlayersView:
         while True:
             cls.title = "Liste des joueurs\n"
             cls.main_display()
-            i = 1
+            i, choices = 1, ['A', 'M', 'Q']
             for player in players:
                 print(f"[{i}] - {player['name']}")
+                choices.append(i)
                 i += 1
             text = "Selectionnez un joueur"
-            choices = ['M', 'Q']
-            if not disable_route:
+            if display == 'all':
                 _input = prompt(f"{text} pour afficher plus d'infos\n"
-                                "[M]enu principal | [Q]uitter le programme")
-            else:
+                                "[A]jouter un joueur | [M]enu principal | "
+                                "[Q]uitter le programme")
+            elif display == 'minimal':
                 _input = prompt(f"{text} :")
             try:
                 user_choice = int(_input)
             except ValueError:
                 user_choice = _input.upper()
             if user_choice in choices:
-                return user_choice
-            elif user_choice >= 1 and user_choice <= len(players):
-                player_id = user_choice
-                return player_id
+                if isinstance(user_choice, int):
+                    return players[user_choice - 1]['id']
+                else:
+                    return user_choice
             else:
                 continue
 

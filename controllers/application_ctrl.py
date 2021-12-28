@@ -11,6 +11,14 @@ class ApplicationCtrl:
                 'title': "Menu Principal",
                 'controller': HomeCtrl.display_menu
                 },
+            'list_tournaments': {
+                'title': "Liste des tournois",
+                'controller': TournamentsCtrl.list_tournaments
+                },
+            'get_tournament': {
+                'title': "",
+                'controller': TournamentsCtrl
+                },
             'new_tournament': {
                 'title': "Créer un nouveau tournoi",
                 'controller': TournamentsCtrl.create_new

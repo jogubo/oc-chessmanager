@@ -37,7 +37,5 @@ class Database:
         results = []
         for item in search:
             id = item.doc_id
-            results.append(id)
-            print(item, id)
-            print(results)
+            results.append(int(id))
         return results

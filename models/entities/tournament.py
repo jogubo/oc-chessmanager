@@ -9,6 +9,7 @@ class Tournament:
             turns=[],
             rounds=4,
             time=None,
+            id=None
             ):
         self._name = name
         self._location = location
@@ -18,6 +19,7 @@ class Tournament:
         self._rounds = rounds
         self._time = time
         self._description = description
+        self._id = id
 
     def __repr__(self):
         return f"""
@@ -95,6 +97,14 @@ class Tournament:
     def current_round(self):
         print(self.rounds)
         return len(self.turns) + 1
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        self._id = id
 
     def sort_players(self):
         '''
