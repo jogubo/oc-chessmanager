@@ -1,39 +1,23 @@
-from models.entities.menu import Menu
-from views.menu_view import MenuView
+from views.home_view import HomeView
 
 
 class HomeCtrl:
 
-    menu = Menu()
-    view = MenuView(menu, "Menu principal")
-
-    @classmethod
-    def display_menu(cls):
-        cls.menu.add(
-                '1',
-                "Liste des tournois",
-                ('list_tournaments', {'display': 'all'})
-                )
-        cls.menu.add(
-                '2',
-                "Créer un nouveau tournoi",
-                ('new_tournament', None)
-                )
-        cls.menu.add(
-                '3',
-                "Liste des joueurs",
-                ('list_players', {'display': 'all'})
-                )
-        cls.menu.add(
-                '4',
-                "Ajouter un nouveau joueur",
-                ('new_player', None)
-                )
-
-        cls.menu.add(
-                'Q',
-                "Quitter",
-                ('close_app', None)
-                )
-        user_choice = cls.view.user_choice()
-        return user_choice.controller
+    @staticmethod
+    def display_menu():
+        menu = {
+                '1': {
+                    'menu_title': "Liste des tournois",
+                    'route': ('liste_tournaments', {'display': 'all'})
+                    },
+                '2': {
+                    'menu_title': "Liste des joueurs",
+                    'route': ('list_players', {'display': 'all'})
+                    },
+                'Q': {
+                    'menu_title': "Quitter",
+                    'route': ('close_app', None)
+                    }
+                }
+        user_choice = HomeView.display_menu(menu)
+        return user_choice

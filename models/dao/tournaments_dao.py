@@ -11,7 +11,7 @@ class TournamentsDAO:
         Create object.
 
             Parameters:
-                serialized_tournament (dict): Dictionnary with data
+                serialized_tournament (dict): Dictionary with data
 
             Returns:
                 tournament (object): Tournament object created
