@@ -55,7 +55,7 @@ class TournamentsDAO:
                 'all' for  entire list in the database.
 
             Returns:
-                tournaments (list): List of tournament objects
+                tournaments (list): The list of tournament objects
         """
         list_ids = list_ids
         tournaments = []
@@ -89,7 +89,7 @@ class TournamentsDAO:
         return players
 
     @staticmethod
-    def format_data(tournaments, id=False, name=False):
+    def format_data(tournaments, id=False, name=False, list=False):
         """
         Format data for the view.
 
@@ -97,22 +97,25 @@ class TournamentsDAO:
                 tournaments (object, list): Single object or object list
                 id (bool): Add ID in the data
                 name (bool): Add name in the data
+                list (bool): Set True to force the return of a list
 
             Returns:
                 tournaments_infos (dict, list): The data as a dict or dict list
         """
         tournaments, id, name = tournaments, id, name
+        single_id = False
         if isinstance(tournaments, int):
             tournaments = [tournaments]
+            single_id = True
         tournaments_infos = []
         for tournament in tournaments:
             infos = {}
             if id:
                 infos['id'] = tournament.id
             if name:
-                infos['name'] = tournament.full_name
+                infos['name'] = tournament.name
             tournaments_infos.append(infos)
-        if len(tournaments) == 1:
+        if single_id and not list:
             return tournaments_infos[0]
         else:
             return tournaments_infos

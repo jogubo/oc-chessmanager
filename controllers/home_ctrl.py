@@ -8,7 +8,7 @@ class HomeCtrl:
         menu = {
                 '1': {
                     'menu_title': "Liste des tournois",
-                    'route': ('liste_tournaments', {'display': 'all'})
+                    'route': ('list_tournaments', {'display': 'all'})
                     },
                 '2': {
                     'menu_title': "Liste des joueurs",

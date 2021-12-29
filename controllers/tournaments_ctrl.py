@@ -8,37 +8,29 @@ from views.players_view import PlayersView
 
 
 class TournamentsCtrl:
-    def __init__(self, tournament_id):
-        tournament = TournamentsDAO.get_tournament_by_id(tournament_id)
-        players = TournamentsDAO.get_players_of_the_tournament(tournament)
-        self.tournament, self.players = tournament, players
 
     @classmethod
-    def list_tournaments(cls, list_ids='all', display=False):
-        list_ids = list_ids
-        tournaments = []
-        if list_ids == 'all':
-            list_ids = []
-            serialized_tournaments = Database.get('tournaments')
-            for tournament in serialized_tournaments:
-                list_ids.append(tournament.doc_id)
-        for id in list_ids:
-            serialized_tournament = Database.get('tournament', id)
-            serialized_tournament['id'] = serialized_tournament.doc_id
-            tournament = TournamentsCtrl(serialized_tournament.doc_id)
-            tournaments.append(tournament)
-        if not display:
-            return tournaments
-        tournaments_infos = cls.format_data(tournaments, id=True, name=True)
-        user_choice = PlayersView.list(tournaments_infos, display)
+    def get_tournament(cls, tournament_id):
+        player = TournamentsDAO.get_tournament_by_id(tournament_id)
+        user_choice = PlayersView.display_player(player.infos)
+        if user_choice == 'R':
+            return 'list_tournaments', {'display': 'all'}
+
+    @classmethod
+    def list_tournaments(cls, list_ids='all', display=None):
+        tournaments = TournamentsDAO.get_list_tournaments(list_ids)
+        tournaments_infos = TournamentsDAO.format_data(
+                tournaments=tournaments,
+                id=True,
+                name=True,
+                list=True
+                )
+        user_choice = TournamentsView.list(tournaments_infos, display='all')
         if isinstance(user_choice, int):
-            return 'get_tournament', {
-                    'tournament_id': user_choice,
-                    'players': False
-                    }
+            return 'get_tournament', {'tournament_id': user_choice}
         elif user_choice == 'M':
             return 'home', None
-        elif user_choice == 'A':
+        elif user_choice == 'C':
             return 'new_tournament', None
         elif user_choice == 'Q':
             return 'close_app', None

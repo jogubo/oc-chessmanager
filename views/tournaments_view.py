@@ -19,7 +19,7 @@ class TournamentsView:
         while True:
             cls.title = "Liste des tournois\n"
             cls.main_display()
-            i, choices = 1, ['A', 'M', 'Q']
+            i, choices = 1, ['C', 'M', 'Q']
             for tournament in tournaments_infos:
                 print(f"[{i}] - {tournament['name']}")
                 choices.append(i)
@@ -27,7 +27,7 @@ class TournamentsView:
             text = "Selectionnez un tournoi"
             if display == 'all':
                 _input = prompt(f"{text} pour afficher plus d'infos\n"
-                                "[A]jouter un joueur | [M]enu principal | "
+                                "[C]réer un tournoi | [M]enu principal | "
                                 "[Q]uitter le programme")
             elif display == 'minimal':
                 _input = prompt(f"{text} :")

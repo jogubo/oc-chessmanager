@@ -25,8 +25,6 @@ class Tournament:
         return f"""
         {self.name}
         {self.description}
-        Joueurs participants:
-        {self.players}
         """
 
     @property

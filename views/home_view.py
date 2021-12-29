@@ -18,6 +18,6 @@ class HomeView:
             cls.main_display()
             for key, value in menu.items():
                 print(f"[{key}] : {value['menu_title']}")
-            user_choice = prompt("test").upper()
+            user_choice = prompt("Entrez le choix correspondant :").upper()
             if user_choice in menu:
                 return menu[user_choice]['route']
