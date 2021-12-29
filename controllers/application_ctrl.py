@@ -17,7 +17,7 @@ class ApplicationCtrl:
                 },
             'get_tournament': {
                 'title': "",
-                'controller': TournamentsCtrl
+                'controller': TournamentsCtrl.get_tournament
                 },
             'new_tournament': {
                 'title': "Créer un nouveau tournoi",

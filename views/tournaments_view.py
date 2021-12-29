@@ -12,7 +12,20 @@ class TournamentsView:
         print(f"{cls.title}\n")
 
     @classmethod
-    def list(cls, tournaments_infos, display='all'):
+    def display_tournament(cls, tournament_infos):
+        cls.main_display()
+        print(f"{tournament_infos['name']}\n")
+        print(f"{tournament_infos['description']}\n")
+        print("Joueurs participants:")
+        for id, player_infos in tournament_infos['players'].items():
+            print(f"{player_infos['name']} | Rang: {player_infos['rank']}")
+        choices = ['R']
+        _input = prompt("[R]etour à la liste des tournois").upper()
+        if _input in choices:
+            return _input
+
+    @classmethod
+    def display_list(cls, tournaments_infos, display='all'):
         '''
         tournments_infos = [{'id': tournament_id, 'name': tournament_name}]
         '''

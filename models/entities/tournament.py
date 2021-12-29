@@ -9,7 +9,8 @@ class Tournament:
             turns=[],
             rounds=4,
             time=None,
-            id=None
+            id=None,
+            players=None
             ):
         self._name = name
         self._location = location
@@ -20,8 +21,16 @@ class Tournament:
         self._time = time
         self._description = description
         self._id = id
+        self.players = players
 
     def __repr__(self):
+        return f"""
+        {self.name}
+        {self.description}
+        """
+
+    @property
+    def infos(self):
         return f"""
         {self.name}
         {self.description}
@@ -50,6 +59,14 @@ class Tournament:
     @players_data.setter
     def players_data(self, players_data):
         self._players_data = players_data
+
+    @property
+    def players(self):
+        return self._players
+
+    @players.setter
+    def players(self, players):
+        self._players = players
 
     @property
     def date(self):

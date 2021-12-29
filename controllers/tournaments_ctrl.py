@@ -1,18 +1,25 @@
 from utils.database import Database
 from models.dao.tournaments_dao import TournamentsDAO
-from models.entities.tournament import Tournament
 from models.dao.players_dao import PlayersDAO
 from controllers.players_ctrl import PlayersCtrl
 from views.tournaments_view import TournamentsView
-from views.players_view import PlayersView
 
 
 class TournamentsCtrl:
 
     @classmethod
     def get_tournament(cls, tournament_id):
-        player = TournamentsDAO.get_tournament_by_id(tournament_id)
-        user_choice = PlayersView.display_player(player.infos)
+        tournament = TournamentsDAO.get_tournament_by_id(
+                tournament_id=tournament_id,
+                players=True
+                )
+        tournament_infos = TournamentsDAO.format_data(
+                tournaments=tournament,
+                name=True,
+                description=True,
+                players=True
+                )
+        user_choice = TournamentsView.display_tournament(tournament_infos)
         if user_choice == 'R':
             return 'list_tournaments', {'display': 'all'}
 
@@ -23,9 +30,9 @@ class TournamentsCtrl:
                 tournaments=tournaments,
                 id=True,
                 name=True,
-                list=True
+                force=True
                 )
-        user_choice = TournamentsView.list(tournaments_infos, display='all')
+        user_choice = TournamentsView.display_list(tournaments_infos, display='all')
         if isinstance(user_choice, int):
             return 'get_tournament', {'tournament_id': user_choice}
         elif user_choice == 'M':

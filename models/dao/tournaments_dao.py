@@ -30,19 +30,22 @@ class TournamentsDAO:
         return tournament
 
     @classmethod
-    def get_tournament_by_id(cls, tournament_id):
+    def get_tournament_by_id(cls, tournament_id, players=False):
         """
         Get tournament object.
 
             Parameters:
                 tournament_id (int): Tournament ID
+                players (bool): Add player objects
 
             Returns:
-                tournament (object): Tournament Object
+                tournament (object): Tournament objects
         """
         tournament_data = Database.get('tournaments', tournament_id)
         tournament_data['id'] = tournament_data.doc_id
         tournament = cls.create_tournament(tournament_data)
+        if players:
+            tournament.players = cls.get_players_of_the_tournament(tournament)
         return tournament
 
     @classmethod
@@ -70,18 +73,18 @@ class TournamentsDAO:
         return tournaments
 
     @classmethod
-    def get_players_of_the_tournament(cls, tournament):
+    def get_players_of_the_tournament(cls, tournament, sort=True):
         """
-        Get the list of player objects of a tournament.
+        Get the dict of player objects of a tournament.
 
             Parameters:
                 tournament (object): Single tournament object
 
             Returns:
-                players (list): List of player objects
+                players (dict): Dictionary of player objects
         """
         players = {}
-        players_data = tournament.players_data()
+        players_data = tournament.players_data
         for player_id, player_data in players_data.items():
             players[player_id] = PlayersDAO.get_player_by_id(int(player_id))
             players[player_id].score = player_data['score']
@@ -89,7 +92,14 @@ class TournamentsDAO:
         return players
 
     @staticmethod
-    def format_data(tournaments, id=False, name=False, list=False):
+    def format_data(
+            tournaments,
+            id=False,
+            name=False,
+            description=False,
+            players=False,
+            force=False
+            ):
         """
         Format data for the view.
 
@@ -97,16 +107,16 @@ class TournamentsDAO:
                 tournaments (object, list): Single object or object list
                 id (bool): Add ID in the data
                 name (bool): Add name in the data
-                list (bool): Set True to force the return of a list
+                force (bool): Set True to force the return of a list
 
             Returns:
                 tournaments_infos (dict, list): The data as a dict or dict list
         """
-        tournaments, id, name = tournaments, id, name
-        single_id = False
-        if isinstance(tournaments, int):
+        list_tournaments, id, name = tournaments, id, name
+        single_object = False
+        if not isinstance(list_tournaments, list):
             tournaments = [tournaments]
-            single_id = True
+            single_object = True
         tournaments_infos = []
         for tournament in tournaments:
             infos = {}
@@ -114,8 +124,23 @@ class TournamentsDAO:
                 infos['id'] = tournament.id
             if name:
                 infos['name'] = tournament.name
+            if description:
+                infos['description'] = tournament.description
+            if players and tournament.players is not None:
+                players = tournament.players
+                print(players)
+                players_infos = {}
+                for id, player in players.items():
+                    print(id)
+                    print(player.full_name)
+                    players_infos[id] = PlayersDAO.format_data(
+                            players=player,
+                            name=True,
+                            rank=True
+                            )
+                infos['players'] = players_infos
             tournaments_infos.append(infos)
-        if single_id and not list:
+        if single_object and not force:
             return tournaments_infos[0]
         else:
             return tournaments_infos

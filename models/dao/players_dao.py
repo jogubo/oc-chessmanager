@@ -47,12 +47,12 @@ class PlayersDAO:
         return players_ids
 
     @staticmethod
-    def format_data(players, id=False, name=False, rank=False, list=False):
+    def format_data(players, id=False, name=False, rank=False, force=False):
         players, id, name, rank = players, id, name, rank
-        single_id = False
-        if isinstance(players, int):
+        single_object = False
+        if not isinstance(players, list):
             players = [players]
-            single_id = True
+            single_object = True
         players_infos = []
         for player in players:
             infos = {}
@@ -63,7 +63,7 @@ class PlayersDAO:
             if rank:
                 infos['rank'] = player.rank
             players_infos.append(infos)
-        if single_id and not list:
+        if single_object and not force:
             return players_infos[0]
         else:
             return players_infos

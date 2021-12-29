@@ -31,7 +31,7 @@ class PlayersCtrl:
                 players=players,
                 id=True,
                 name=True,
-                list=True
+                force=True
                 )
         user_choice = PlayersView.list(players_infos, display)
         if isinstance(user_choice, int):
