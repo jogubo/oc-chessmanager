@@ -4,7 +4,7 @@ class Tournament:
             name,
             description,
             location,
-            players,
+            players_data,
             date,
             turns=[],
             rounds=4,
@@ -13,7 +13,7 @@ class Tournament:
             ):
         self._name = name
         self._location = location
-        self._players_data = players
+        self._players_data = players_data
         self._date = date
         self._turns = turns
         self._rounds = rounds
@@ -155,6 +155,7 @@ class Tournament:
                     i = 1
         return versus
 
+    @property
     def serialize(self):
         return {
                 'name': self.name,

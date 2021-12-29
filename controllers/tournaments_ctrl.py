@@ -91,22 +91,23 @@ class TournamentsCtrl:
     @staticmethod
     def create_new():
         new_tournament_form = TournamentsView.create_new_tournament()
-        players = {}
+        players_data = {}
         total_players = new_tournament_form["nb_players"]
         while total_players > 0:
             search_player = PlayersCtrl.search_by_name()
             player = PlayersDAO.get_player_by_id(search_player)
-            if player.id not in players:
-                players[player.id] = {
+            if player.id not in players_data:
+                players_data[player.id] = {
                         'score': 0.0,
                         'rank': player.rank,
                         'history': []
                         }
                 total_players -= 1
-        new_tournament_form['players'] = players
+        new_tournament_form['players_data'] = players_data
         new_tournament_form['turns'] = []
         new_tournament_form['rounds'] = 4
         new_tournament_form['time'] = 'Blitz'
+        new_tournament_form['id'] = None
         tournament = TournamentsDAO.create_tournament(new_tournament_form)
-        TournamentsDAO.add_tournament_in_db(tournament)
-        return 'home'
+        TournamentsDAO.add_tournaments_in_db(tournament)
+        return 'home', None
