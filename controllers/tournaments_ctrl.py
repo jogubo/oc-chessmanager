@@ -101,11 +101,12 @@ class TournamentsCtrl:
                 'date': '12/12/2012',
                 'matchs': matchs_results
                 }
-        print(tournament.turns)
         rounds = tournament.turns
         rounds.append(round)
         tournament.turns = rounds
-        Database.update('tournaments', 'turns', rounds, tournament.id)
+        tournament.update_players_data()
+        Database.update('tournaments', 'turns', rounds, [tournament.id])
+        Database.update('tournaments', 'players_data', tournament.players_data, [tournament.id])
         return 'tournament_ranking', {'tournament': tournament}
 
     @staticmethod

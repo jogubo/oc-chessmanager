@@ -172,6 +172,10 @@ class Tournament:
                     i = 1
         return versus
 
+    def update_players_data(self):
+        for id, player_data in self.players_data.items():
+            player_data['score'] = self.players[id].score
+
     def format_data(self, *args):
         tournament_infos = {}
         if 'id' in args or 'all' in args:
