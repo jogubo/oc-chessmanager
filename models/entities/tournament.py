@@ -127,7 +127,6 @@ class Tournament:
             [player_id, player_score, player_rank]
         '''
         players_data = self.players_data
-
         players = []
         for id, data in players_data.items():
             player = [
@@ -138,8 +137,10 @@ class Tournament:
                     ]
             players.append(player)
 
-        SCORE, RANK = 1, 2
+        ID, SCORE, RANK = 0, 1, 2
+        print(players)
         players.sort(key=lambda x: x[SCORE], reverse=True)
+        print(players)
         for i in range(0, len(players)):
             for j in range(0, len(players)-i-1):
                 if (players[j][SCORE] == players[j+1][SCORE]):
@@ -147,6 +148,10 @@ class Tournament:
                         temp = players[j]
                         players[j] = players[j+1]
                         players[j+1] = temp
+        sorted_players = {}
+        for player in players:
+            sorted_players[player[ID]] = self.players[player[ID]]
+        self.players = sorted_players
         return players
 
     def generate_versus(self):

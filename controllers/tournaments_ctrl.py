@@ -8,11 +8,14 @@ from views.tournaments_view import TournamentsView
 class TournamentsCtrl:
 
     @classmethod
-    def get_tournament(cls, tournament_id):
-        tournament = TournamentsDAO.get_tournament_by_id(
-                tournament_id=tournament_id,
-                players=True
-                )
+    def get_tournament(cls, tournament_id=None, tournament=None):
+        if tournament is None:
+            tournament = TournamentsDAO.get_tournament_by_id(
+                    tournament_id=tournament_id,
+                    players=True
+                    )
+        elif tournament_id is None:
+            tournament = tournament
         tournament_infos = TournamentsDAO.format_data(
                 tournaments=tournament,
                 name=True,
@@ -22,6 +25,20 @@ class TournamentsCtrl:
         user_choice = TournamentsView.display_tournament(tournament_infos)
         if user_choice == 'R':
             return 'list_tournaments', {'display': 'all'}
+        elif user_choice == 'C':
+            return 'tournament_ranking', {'tournament': tournament}
+
+    @classmethod
+    def get_ranking(cls, tournament):
+        tournament.sort_players()
+        tournament_infos = TournamentsDAO.format_data(
+                tournaments=tournament,
+                name=True,
+                description=True,
+                players=True
+                )
+        TournamentsView.display_ranking(tournament_infos)
+        return 'get_tournament', {'tournament': tournament}
 
     @classmethod
     def list_tournaments(cls, list_ids='all', display=None):

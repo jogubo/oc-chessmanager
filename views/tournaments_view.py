@@ -16,13 +16,25 @@ class TournamentsView:
         cls.main_display()
         print(f"{tournament_infos['name']}\n")
         print(f"{tournament_infos['description']}\n")
-        print("Joueurs participants:")
-        for id, player_infos in tournament_infos['players'].items():
-            print(f"{player_infos['name']} | Rang: {player_infos['rank']}")
-        choices = ['R']
-        _input = prompt("[R]etour à la liste des tournois").upper()
+        choices = ['C', 'R']
+        _input = prompt("[C]lassement | [P]rochains matchs | "
+                        "[R]etour à la liste des tournois").upper()
         if _input in choices:
             return _input
+
+    @classmethod
+    def display_ranking(cls, tournament_infos):
+        print("Joueurs participants:")
+        cls.main_display()
+        i = 1
+        for id, player_infos in tournament_infos['players'].items():
+            print(f"{i}  -  {player_infos['name']} | "
+                  f"Score: {player_infos['score']} | "
+                  f"Rang: {player_infos['rank']}")
+            i += 1
+        prompt("Appuyer sur une touche pour revenir "
+               "à la gestion du tournoi:").upper()
+        return None
 
     @classmethod
     def display_list(cls, tournaments_infos, display='all'):

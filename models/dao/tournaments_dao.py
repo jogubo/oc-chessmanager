@@ -128,14 +128,12 @@ class TournamentsDAO:
                 infos['description'] = tournament.description
             if players and tournament.players is not None:
                 players = tournament.players
-                print(players)
                 players_infos = {}
                 for id, player in players.items():
-                    print(id)
-                    print(player.full_name)
                     players_infos[id] = PlayersDAO.format_data(
                             players=player,
                             name=True,
+                            score=True,
                             rank=True
                             )
                 infos['players'] = players_infos
