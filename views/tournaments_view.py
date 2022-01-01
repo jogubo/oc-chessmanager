@@ -16,7 +16,7 @@ class TournamentsView:
         cls.main_display()
         print(f"{tournament_infos['name']}\n")
         print(f"{tournament_infos['description']}\n")
-        choices = ['C', 'R']
+        choices = ['C', 'P', 'R']
         _input = prompt("[C]lassement | [P]rochains matchs | "
                         "[R]etour à la liste des tournois").upper()
         if _input in choices:
@@ -35,6 +35,22 @@ class TournamentsView:
         prompt("Appuyer sur une touche pour revenir "
                "à la gestion du tournoi:").upper()
         return None
+
+    @classmethod
+    def display_round(cls, versus_list, tournament_infos):
+        while True:
+            players_infos = tournament_infos['players']
+            cls.main_display()
+            print("Prochains matchs:")
+            i, choices = 1, ['E', 'R']
+            for players in versus_list:
+                print(f"{i}  -  {players_infos[players[0]]['name']} "
+                      f"  VS  {players_infos[players[1]]['name']}")
+                i += 1
+            _input = prompt("[E]ntrer les résultats | "
+                            "[R]etour").upper()
+            if _input in choices:
+                return _input
 
     @classmethod
     def display_list(cls, tournaments_infos, display='all'):

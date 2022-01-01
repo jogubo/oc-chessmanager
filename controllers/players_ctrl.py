@@ -27,13 +27,10 @@ class PlayersCtrl:
     @classmethod
     def list_players(cls, list_ids='all', display=None):
         players = PlayersDAO.get_list_players(list_ids)
-        players_infos = PlayersDAO.format_data(
-                players=players,
-                id=True,
-                name=True,
-                force=True
+        user_choice = PlayersView.list(
+                PlayersDAO.list_formatted_data(players),
+                display
                 )
-        user_choice = PlayersView.list(players_infos, display)
         if isinstance(user_choice, int):
             return 'get_player', {'player_id': user_choice}
         elif user_choice == 'M':

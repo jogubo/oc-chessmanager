@@ -110,7 +110,6 @@ class Tournament:
 
     @property
     def current_round(self):
-        print(self.rounds)
         return len(self.turns) + 1
 
     @property
@@ -138,9 +137,7 @@ class Tournament:
             players.append(player)
 
         ID, SCORE, RANK = 0, 1, 2
-        print(players)
         players.sort(key=lambda x: x[SCORE], reverse=True)
-        print(players)
         for i in range(0, len(players)):
             for j in range(0, len(players)-i-1):
                 if (players[j][SCORE] == players[j+1][SCORE]):
@@ -174,6 +171,23 @@ class Tournament:
                     del players[ID]
                     i = 1
         return versus
+
+    def format_data(self, *args):
+        tournament_infos = {}
+        if 'id' in args or 'all' in args:
+            tournament_infos['id'] = self.id
+        if 'name' in args or 'all' in args:
+            tournament_infos['name'] = self.name
+        if 'description' in args or 'all' in args:
+            tournament_infos['description'] = self.description
+        if 'current_round' in args or 'all' in args:
+            tournament_infos['current_round'] = self.current_round
+        if 'player' in args or 'all' in args and self.players is not None:
+            players_infos = {}
+            for id, player in self.players.items():
+                players_infos[id] = player.format_data('all')
+            tournament_infos['players'] = players_infos
+        return tournament_infos
 
     @property
     def serialize(self):

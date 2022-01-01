@@ -87,6 +87,18 @@ class Player:
                 )
         return infos
 
+    def format_data(self, *args):
+        player_infos = {}
+        if 'id' in args or 'all' in args:
+            player_infos['id'] = self.id
+        if 'name' in args or 'all' in args:
+            player_infos['name'] = self.full_name
+        if 'rank' in args or 'all' in args:
+            player_infos['rank'] = self.rank
+        if 'score' in args or 'all' in args:
+            player_infos['score'] = self.score
+        return player_infos
+
     @property
     def serialize(self):
         return {

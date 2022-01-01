@@ -16,40 +16,46 @@ class TournamentsCtrl:
                     )
         elif tournament_id is None:
             tournament = tournament
-        tournament_infos = TournamentsDAO.format_data(
-                tournaments=tournament,
-                name=True,
-                description=True,
-                players=True
+        if tournament.players is not None:
+            tournament.players = TournamentsDAO.get_players_of_the_tournament(
+                    tournament
+                    )
+        print(tournament.players)
+        user_choice = TournamentsView.display_tournament(
+                tournament.format_data('all')
                 )
-        user_choice = TournamentsView.display_tournament(tournament_infos)
         if user_choice == 'R':
             return 'list_tournaments', {'display': 'all'}
         elif user_choice == 'C':
             return 'tournament_ranking', {'tournament': tournament}
+        elif user_choice == 'P':
+            return 'next_round', {'tournament': tournament}
 
     @classmethod
     def get_ranking(cls, tournament):
         tournament.sort_players()
-        tournament_infos = TournamentsDAO.format_data(
-                tournaments=tournament,
-                name=True,
-                description=True,
-                players=True
-                )
-        TournamentsView.display_ranking(tournament_infos)
+        TournamentsView.display_ranking(tournament.format_data('all'))
         return 'get_tournament', {'tournament': tournament}
+
+    @classmethod
+    def get_next_round(cls, tournament):
+        matchs = tournament.generate_versus()
+        user_choice = TournamentsView.display_round(
+                matchs,
+                tournament.format_data('all')
+                )
+        if user_choice == 'E':
+            return 'set_score', {'tournament': tournament}
+        elif user_choice == 'R':
+            return 'get_tournament', {'tournament': tournament}
 
     @classmethod
     def list_tournaments(cls, list_ids='all', display=None):
         tournaments = TournamentsDAO.get_list_tournaments(list_ids)
-        tournaments_infos = TournamentsDAO.format_data(
-                tournaments=tournaments,
-                id=True,
-                name=True,
-                force=True
+        user_choice = TournamentsView.display_list(
+                TournamentsDAO.list_formatted_data(tournaments),
+                display='all'
                 )
-        user_choice = TournamentsView.display_list(tournaments_infos, display='all')
         if isinstance(user_choice, int):
             return 'get_tournament', {'tournament_id': user_choice}
         elif user_choice == 'M':
@@ -58,10 +64,6 @@ class TournamentsCtrl:
             return 'new_tournament', None
         elif user_choice == 'Q':
             return 'close_app', None
-
-    def resume_match(self):
-        while self._tournament.current_round <= self._tournament.rounds:
-            self.set_score()
 
     def list_matchs(self):
         matchs_list = self._tournament.generate_versus()
@@ -73,17 +75,18 @@ class TournamentsCtrl:
             matchs.append(players)
         TournamentsView.display_matchs_list(round, matchs)
 
-    def set_score(self):
+    @classmethod
+    def set_score(cls, tournament):
         PLAYER_1, PLAYER_2 = 0, 1
-        matchs = self._tournament.generate_versus()
+        matchs = tournament.generate_versus()
         matchs_results = []
         for match in matchs:
             player_1, player_2 = match
-            player_1 = self._players[player_1]
-            player_2 = self._players[player_2]
+            player_1 = tournament.players[player_1]
+            player_2 = tournament.players[player_2]
             players = (player_1.full_name, player_2.full_name)
             score = TournamentsView.set_score_match(
-                    self._tournament.current_round,
+                    tournament.current_round,
                     players
                     )
             player_1.score += score[PLAYER_1]
@@ -98,11 +101,12 @@ class TournamentsCtrl:
                 'date': '12/12/2012',
                 'matchs': matchs_results
                 }
-        print(self._tournament.turns)
-        rounds = self._tournament.turns
+        print(tournament.turns)
+        rounds = tournament.turns
         rounds.append(round)
-        self._tournament.turns = rounds
-        Database.update('tournaments', 'turns', rounds, [5])
+        tournament.turns = rounds
+        Database.update('tournaments', 'turns', rounds, tournament.id)
+        return 'tournament_ranking', {'tournament': tournament}
 
     @staticmethod
     def create_new():

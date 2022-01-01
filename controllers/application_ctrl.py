@@ -23,6 +23,14 @@ class ApplicationCtrl:
                 'title': "",
                 'controller': TournamentsCtrl.get_ranking
                 },
+            'next_round': {
+                'title': "",
+                'controller': TournamentsCtrl.get_next_round
+                },
+            'set_score': {
+                'title': "",
+                'controller': TournamentsCtrl.set_score
+                },
             'new_tournament': {
                 'title': "Créer un nouveau tournoi",
                 'controller': TournamentsCtrl.create_new

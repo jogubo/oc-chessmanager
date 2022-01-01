@@ -92,53 +92,25 @@ class TournamentsDAO:
         return players
 
     @staticmethod
-    def format_data(
-            tournaments,
-            id=False,
-            name=False,
-            description=False,
-            players=False,
-            force=False
-            ):
+    def list_formatted_data(tournaments, force_list=False):
         """
         Format data for the view.
 
             Parameters:
                 tournaments (object, list): Single object or object list
-                id (bool): Add ID in the data
-                name (bool): Add name in the data
-                force (bool): Set True to force the return of a list
+                force_list (bool): Set True to force the return of a list
 
             Returns:
                 tournaments_infos (dict, list): The data as a dict or dict list
         """
-        list_tournaments, id, name = tournaments, id, name
         single_object = False
-        if not isinstance(list_tournaments, list):
+        if not isinstance(tournaments, list):
             tournaments = [tournaments]
             single_object = True
         tournaments_infos = []
         for tournament in tournaments:
-            infos = {}
-            if id:
-                infos['id'] = tournament.id
-            if name:
-                infos['name'] = tournament.name
-            if description:
-                infos['description'] = tournament.description
-            if players and tournament.players is not None:
-                players = tournament.players
-                players_infos = {}
-                for id, player in players.items():
-                    players_infos[id] = PlayersDAO.format_data(
-                            players=player,
-                            name=True,
-                            score=True,
-                            rank=True
-                            )
-                infos['players'] = players_infos
-            tournaments_infos.append(infos)
-        if single_object and not force:
+            tournaments_infos.append(tournament.format_data('all'))
+        if single_object and not force_list:
             return tournaments_infos[0]
         else:
             return tournaments_infos
