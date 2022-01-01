@@ -104,9 +104,7 @@ class TournamentsCtrl:
         rounds = tournament.turns
         rounds.append(round)
         tournament.turns = rounds
-        tournament.update_players_data()
-        Database.update('tournaments', 'turns', rounds, [tournament.id])
-        Database.update('tournaments', 'players_data', tournament.players_data, [tournament.id])
+        TournamentsDAO.update_db(tournament, ('turns', 'players_data'))
         return 'tournament_ranking', {'tournament': tournament}
 
     @staticmethod

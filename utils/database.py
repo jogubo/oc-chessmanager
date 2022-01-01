@@ -26,6 +26,8 @@ class Database:
 
     @classmethod
     def update(cls, table, key, value, doc_ids):
+        if isinstance(doc_ids, (int, str)):
+            doc_ids = [doc_ids]
         table = cls.table(table)
         table.update({key: value}, doc_ids=doc_ids)
 

@@ -116,6 +116,18 @@ class TournamentsDAO:
             return tournaments_infos
 
     @staticmethod
+    def update_db(tournament, list_args):
+        print(list_args)
+        tournament = tournament
+        print(tournament.turns)
+        if 'players_data' in list_args:
+            tournament.update_players_data()
+            Database.update('tournaments', 'players_data', tournament.players_data, [tournament.id])
+        if 'turns' in list_args:
+            Database.update('tournaments', 'turns', tournament.turns, [tournament.id])
+        input()
+
+    @staticmethod
     def add_tournaments_in_db(tournaments):
         """
         Add tournaments in the database.
