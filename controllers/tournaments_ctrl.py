@@ -9,6 +9,7 @@ class TournamentsCtrl:
 
     @classmethod
     def get_tournament(cls, tournament_id=None, tournament=None):
+        finished = False
         if tournament is None:
             tournament = TournamentsDAO.get_tournament_by_id(
                     tournament_id=tournament_id,
@@ -20,9 +21,11 @@ class TournamentsCtrl:
             tournament.players = TournamentsDAO.get_players_of_the_tournament(
                     tournament
                     )
-        print(tournament.players)
+        if tournament.current_round > tournament.rounds:
+            finished = True
         user_choice = TournamentsView.display_tournament(
-                tournament.format_data('all')
+                tournament.format_data('all'),
+                finished
                 )
         if user_choice == 'R':
             return 'list_tournaments', {'display': 'all'}
@@ -84,13 +87,15 @@ class TournamentsCtrl:
             player_1, player_2 = match
             player_1 = tournament.players[player_1]
             player_2 = tournament.players[player_2]
-            players = (player_1.full_name, player_2.full_name)
             score = TournamentsView.set_score_match(
                     tournament.current_round,
-                    players
+                    (player_1.full_name, player_2.full_name)
                     )
             player_1.score += score[PLAYER_1]
+            players_data = tournament.players_data
+            players_data[str(player_1.id)]['history'].append(str(player_2.id))
             player_2.score += score[PLAYER_2]
+            players_data[str(player_2.id)]['history'].append(str(player_1.id))
             match = (
                     [player_1.id, score[PLAYER_1]],
                     [player_2.id, score[PLAYER_2]]

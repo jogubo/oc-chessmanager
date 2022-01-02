@@ -39,6 +39,10 @@ class ApplicationCtrl:
                 'title': "Liste des joueurs",
                 'controller': PlayersCtrl.list_players
                 },
+            'sort_players': {
+                'title': "",
+                'controller': PlayersCtrl.sort_list_players
+                },
             'get_player': {
                 'title': "Fiche du joueur",
                 'controller': PlayersCtrl.get_player

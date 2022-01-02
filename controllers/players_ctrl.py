@@ -25,8 +25,11 @@ class PlayersCtrl:
         return 'get_player', {'player_id': player.id}
 
     @classmethod
-    def list_players(cls, list_ids='all', display=None):
-        players = PlayersDAO.get_list_players(list_ids)
+    def list_players(cls, list_players=None, list_ids='all', display=None):
+        if list_players is not None:
+            players = list_players
+        else:
+            players = PlayersDAO.get_list_players(list_ids)
         user_choice = PlayersView.list(
                 PlayersDAO.list_formatted_data(players),
                 display
@@ -37,8 +40,19 @@ class PlayersCtrl:
             return 'home', None
         elif user_choice == 'A':
             return 'new_player', None
+        elif user_choice == 'T':
+            return 'sort_players', {'players': players}
         elif user_choice == 'Q':
             return 'close_app', None
+
+    @classmethod
+    def sort_list_players(cls, players):
+        user_choice = PlayersView.sort_by()
+        if user_choice == 'N':
+            players = PlayersDAO.sort_list(players, sort_by='name')
+        if user_choice == 'R':
+            players = PlayersDAO.sort_list(players, sort_by='rank')
+        return 'list_players', {'list_players': players, 'display': 'all'}
 
     @classmethod
     def search_by_name(cls):

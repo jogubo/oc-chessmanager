@@ -40,6 +40,14 @@ class PlayersDAO:
         return players
 
     @classmethod
+    def sort_list(cls, players, sort_by='name'):
+        if sort_by == 'name':
+            players.sort(key=lambda x: x.last_name)
+        if sort_by == 'rank':
+            players.sort(key=lambda x: int(x.rank))
+        return players
+
+    @classmethod
     def search_player_by_name(cls, name_request):
         players_ids = []
         while len(players_ids) < 1:

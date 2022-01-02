@@ -32,16 +32,17 @@ class PlayersView:
         while True:
             cls.title = "Liste des joueurs\n"
             cls.main_display()
-            i, choices = 1, ['A', 'M', 'Q']
+            i, choices = 1, ['A', 'T', 'M', 'Q']
             for player in players:
-                print(f"[{i}] - {player['name']}")
+                print(f"[{i}] - {player['name']} - "
+                      f"Rang: {player['rank']}")
                 choices.append(i)
                 i += 1
             text = "Selectionnez un joueur"
             if display == 'all':
                 _input = prompt(f"{text} pour afficher plus d'infos\n"
-                                "[A]jouter un joueur | [M]enu principal | "
-                                "[Q]uitter le programme")
+                                "[A]jouter un joueur | [T]rier | "
+                                "[M]enu principal | [Q]uitter le programme")
             elif display == 'minimal':
                 _input = prompt(f"{text} :")
             try:
@@ -55,6 +56,18 @@ class PlayersView:
                     return user_choice
             else:
                 continue
+
+    @classmethod
+    def sort_by(cls):
+        while True:
+            cls.main_display()
+            choices = ['N', 'R']
+            print("Trier par:\n"
+                  "[N]om\n"
+                  "[R]ang\n")
+            _input = prompt("").upper()
+            if _input in choices:
+                return _input
 
     @classmethod
     def search(cls):

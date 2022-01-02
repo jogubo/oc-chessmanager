@@ -156,20 +156,26 @@ class Tournament:
         median = int(len(players) / 2)
         versus = []
         ID, HISTORY = 0, 3
-        if len(players[0][3]) == 0:
+        if len(players[ID][HISTORY]) == 0:
             for i in range(median):
                 versus.append((players[i][0], players[i+median][0]))
         else:
             i = 1
             while len(players) > 0:
-                player_1, player_2 = players[ID], players[i]
-                if player_2[ID] in player_1[HISTORY]:
-                    i += 1
-                else:
+                try:
+                    player_1, player_2 = players[ID], players[i]
+                    if player_2[ID] in player_1[HISTORY]:
+                        i += 1
+                    else:
+                        versus.append((player_1[ID], player_2[ID]))
+                        del players[i]
+                        del players[ID]
+                        i = 1
+                except IndexError:
+                    i = 1
                     versus.append((player_1[ID], player_2[ID]))
                     del players[i]
                     del players[ID]
-                    i = 1
         return versus
 
     def update_players_data(self):
@@ -184,7 +190,8 @@ class Tournament:
             tournament_infos['name'] = self.name
         if 'description' in args or 'all' in args:
             tournament_infos['description'] = self.description
-        if 'current_round' in args or 'all' in args:
+        if 'rounds' in args or 'all' in args:
+            tournament_infos['total_rounds'] = self.rounds
             tournament_infos['current_round'] = self.current_round
         if 'player' in args or 'all' in args and self.players is not None:
             players_infos = {}

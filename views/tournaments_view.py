@@ -12,13 +12,22 @@ class TournamentsView:
         print(f"{cls.title}\n")
 
     @classmethod
-    def display_tournament(cls, tournament_infos):
+    def display_tournament(cls, tournament_infos, finished=False):
         cls.main_display()
         print(f"{tournament_infos['name']}\n")
         print(f"{tournament_infos['description']}\n")
-        choices = ['C', 'P', 'R']
-        _input = prompt("[C]lassement | [P]rochains matchs | "
-                        "[R]etour à la liste des tournois").upper()
+        choices = ['C', 'R']
+        if not finished:
+            choices.append('P')
+            print(f"Tour actuel: {tournament_infos['current_round']}"
+                  f"/{tournament_infos['total_rounds']}\n")
+            _input = prompt("[C]lassement | [P]rochains matchs | "
+                            "[R]etour à la liste des tournois").upper()
+        elif finished:
+            print("Tournoi terminé.\n")
+            _input = prompt("[C]lassement | "
+                            "[R]etour à la liste des tournois").upper()
+
         if _input in choices:
             return _input
 
