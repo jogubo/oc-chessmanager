@@ -60,8 +60,8 @@ class PlayersCtrl:
         Search a player by name
         '''
         search_request = PlayersView.search()
-        players_ids = PlayersDAO.search_player_by_name(search_request)
-        user_choice = cls.list_players(players_ids, display='minimal')
+        players = PlayersDAO.search_player_by_name(search_request)
+        user_choice = cls.list_players(list_players=players, display='minimal')
         return user_choice[1]['player_id']
 
     @staticmethod

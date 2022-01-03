@@ -24,7 +24,7 @@ class TournamentsDAO:
                 date="date",
                 turns=serialized_tournament['turns'],
                 rounds=serialized_tournament['rounds'],
-                time="time",
+                time=serialized_tournament['time'],
                 id=serialized_tournament['id']
                 )
         return tournament

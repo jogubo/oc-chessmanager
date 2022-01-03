@@ -52,7 +52,8 @@ class PlayersDAO:
         players_ids = []
         while len(players_ids) < 1:
             players_ids = Database.search('players', name_request)
-        return players_ids
+        players = cls.get_list_players(players_ids)
+        return players
 
     @staticmethod
     def list_formatted_data(

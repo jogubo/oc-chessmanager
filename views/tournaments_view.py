@@ -13,13 +13,14 @@ class TournamentsView:
 
     @classmethod
     def display_tournament(cls, tournament_infos, finished=False):
+        cls.title = f"{tournament_infos['name']}"
         cls.main_display()
-        print(f"{tournament_infos['name']}\n")
-        print(f"{tournament_infos['description']}\n")
+        print(f"Description:\n{tournament_infos['description']}\n")
+        print(f"Contrôle du temps:\n{tournament_infos['time']}\n")
         choices = ['C', 'R']
         if not finished:
             choices.append('P')
-            print(f"Tour actuel: {tournament_infos['current_round']}"
+            print(f"Tour actuel:\n{tournament_infos['current_round']}"
                   f"/{tournament_infos['total_rounds']}\n")
             _input = prompt("[C]lassement | [P]rochains matchs | "
                             "[R]etour à la liste des tournois").upper()
@@ -131,6 +132,31 @@ class TournamentsView:
         return birth
 
     @classmethod
+    def set_time(cls):
+        while True:
+            cls.main_display()
+            print("[1] - Bullet\n"
+                  "[2] - Blitz\n"
+                  "[3] - Coup rapide\n")
+            _input = prompt("Choisissez le type de contrôle de temps:")
+            if _input == '1':
+                return 'Bullet'
+            elif _input == '2':
+                return 'Blitz'
+            elif _input == '3':
+                return 'Coup rapide'
+
+    @classmethod
+    def set_round_name(cls):
+        cls.main_display()
+        _input = prompt("Entrez un nom pour ce round ou "
+                        "laissez vide pour un nom auto:")
+        if _input == '':
+            return None
+        else:
+            return _input
+
+    @classmethod
     def set_nb_players(cls):
         return NUMBER_PLAYERS
 
@@ -179,6 +205,7 @@ class TournamentsView:
                 "description": cls.set_description(),
                 "date": cls.set_date(),
                 "location": cls.set_location(),
+                "time": cls.set_time(),
                 "nb_players": cls.set_nb_players(),
                 }
         return tournament

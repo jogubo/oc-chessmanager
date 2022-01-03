@@ -1,4 +1,3 @@
-from utils.database import Database
 from models.dao.tournaments_dao import TournamentsDAO
 from models.dao.players_dao import PlayersDAO
 from controllers.players_ctrl import PlayersCtrl
@@ -83,6 +82,9 @@ class TournamentsCtrl:
         PLAYER_1, PLAYER_2 = 0, 1
         matchs = tournament.generate_versus()
         matchs_results = []
+        round_name = TournamentsView.set_round_name()
+        if round_name is None:
+            round_name = f"round_{tournament.current_round}"
         for match in matchs:
             player_1, player_2 = match
             player_1 = tournament.players[player_1]
@@ -102,8 +104,8 @@ class TournamentsCtrl:
                     )
             matchs_results.append(match)
         round = {
-                'name': 'Hello World',
-                'date': '12/12/2012',
+                'name': round_name,
+                'date': '',
                 'matchs': matchs_results
                 }
         rounds = tournament.turns
@@ -130,7 +132,6 @@ class TournamentsCtrl:
         new_tournament_form['players_data'] = players_data
         new_tournament_form['turns'] = []
         new_tournament_form['rounds'] = 4
-        new_tournament_form['time'] = 'Blitz'
         new_tournament_form['id'] = None
         tournament = TournamentsDAO.create_tournament(new_tournament_form)
         TournamentsDAO.add_tournaments_in_db(tournament)

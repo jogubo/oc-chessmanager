@@ -193,6 +193,8 @@ class Tournament:
         if 'rounds' in args or 'all' in args:
             tournament_infos['total_rounds'] = self.rounds
             tournament_infos['current_round'] = self.current_round
+        if 'time' in args or 'all' in args:
+            tournament_infos['time'] = self.time
         if 'player' in args or 'all' in args and self.players is not None:
             players_infos = {}
             for id, player in self.players.items():
