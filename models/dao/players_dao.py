@@ -42,7 +42,7 @@ class PlayersDAO:
     @classmethod
     def sort_list(cls, players, sort_by='name'):
         if sort_by == 'name':
-            players.sort(key=lambda x: x.last_name)
+            players.sort(key=lambda x: x.full_name)
         if sort_by == 'rank':
             players.sort(key=lambda x: int(x.rank))
         return players

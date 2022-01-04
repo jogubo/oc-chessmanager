@@ -17,12 +17,13 @@ class TournamentsView:
         cls.main_display()
         print(f"Description:\n{tournament_infos['description']}\n")
         print(f"Contrôle du temps:\n{tournament_infos['time']}\n")
-        choices = ['C', 'R']
+        choices = ['C', 'R', 'T']
         if not finished:
             choices.append('P')
             print(f"Tour actuel:\n{tournament_infos['current_round']}"
                   f"/{tournament_infos['total_rounds']}\n")
             _input = prompt("[C]lassement | [P]rochains matchs | "
+                            "[T]ours précédents (résultats) | "
                             "[R]etour à la liste des tournois").upper()
         elif finished:
             print("Tournoi terminé.\n")
@@ -93,6 +94,22 @@ class TournamentsView:
                     return user_choice
             else:
                 continue
+
+    @classmethod
+    def display_rounds(cls, rounds_data):
+        cls.main_display()
+        for round, matchs in rounds_data.items():
+            print(f"{round}")
+            for match, players in matchs.items():
+                print(f"{match}: "
+                      f"{players['player_1']['name']} "
+                      f"({players['player_1']['score']}) "
+                      f"VS "
+                      f"{players['player_2']['name']} "
+                      f"({players['player_2']['score']}) ")
+            print("\n--------------------\n")
+        prompt("Appuyez sur une touche pour revenir au tournoi:")
+        return None
 
     @classmethod
     def set_name(cls):

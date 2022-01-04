@@ -30,6 +30,8 @@ class TournamentsCtrl:
             return 'list_tournaments', {'display': 'all'}
         elif user_choice == 'C':
             return 'tournament_ranking', {'tournament': tournament}
+        elif user_choice == 'T':
+            return 'list_rounds', {'tournament': tournament}
         elif user_choice == 'P':
             return 'next_round', {'tournament': tournament}
 
@@ -76,6 +78,12 @@ class TournamentsCtrl:
             players = (self._players[player_1], self._players[player_2])
             matchs.append(players)
         TournamentsView.display_matchs_list(round, matchs)
+
+    @classmethod
+    def list_rounds(cls, tournament):
+        rounds_data = TournamentsDAO.get_rounds_data(tournament)
+        TournamentsView.display_rounds(rounds_data)
+        return 'get_tournament', {'tournament': tournament}
 
     @classmethod
     def set_score(cls, tournament):

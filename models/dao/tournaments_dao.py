@@ -91,6 +91,34 @@ class TournamentsDAO:
             players[player_id].rank = player_data['rank']
         return players
 
+    @classmethod
+    def get_rounds_data(cls, tournament):
+        players = tournament.players
+        rounds_data = {}
+        PLAYER_1, PLAYER_2 = 0, 1
+        ID, SCORE = 0, 1
+        for round in tournament.turns:
+            matchs = {}
+            i = 1
+            for match in round['matchs']:
+                matchs[f"Match {i}"] = {
+                        'player_1': {
+                            'name':
+                                players[str(match[PLAYER_1][ID])].full_name,
+                            'score':
+                                match[PLAYER_1][SCORE]
+                            },
+                        'player_2': {
+                            'name':
+                                players[str(match[PLAYER_2][ID])].full_name,
+                            'score':
+                                match[PLAYER_2][SCORE]
+                            }
+                        }
+                i += 1
+            rounds_data[round['name']] = matchs
+        return rounds_data
+
     @staticmethod
     def list_formatted_data(tournaments, force_list=False):
         """

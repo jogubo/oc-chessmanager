@@ -31,6 +31,10 @@ class ApplicationCtrl:
                 'title': "",
                 'controller': TournamentsCtrl.set_score
                 },
+            'list_rounds': {
+                'title': "",
+                'controller': TournamentsCtrl.list_rounds
+                },
             'new_tournament': {
                 'title': "Créer un nouveau tournoi",
                 'controller': TournamentsCtrl.create_new
