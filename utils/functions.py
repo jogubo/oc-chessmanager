@@ -1,9 +1,9 @@
-from os import system
+import os
 
 
 def clear():
     """Clear the terminal"""
-    system('clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def prompt(message=None):
