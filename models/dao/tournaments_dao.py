@@ -17,16 +17,16 @@ class TournamentsDAO:
                 tournament (object): Tournament object created
         """
         tournament = Tournament(
-                name=serialized_tournament["name"],
-                description=serialized_tournament["description"],
-                location="location",
-                players_data=serialized_tournament["players_data"],
-                date="date",
-                turns=serialized_tournament['turns'],
-                rounds=serialized_tournament['rounds'],
-                time=serialized_tournament['time'],
-                id=serialized_tournament['id']
-                )
+            name=serialized_tournament["name"],
+            description=serialized_tournament["description"],
+            location="location",
+            players_data=serialized_tournament["players_data"],
+            date="date",
+            turns=serialized_tournament['turns'],
+            rounds=serialized_tournament['rounds'],
+            time=serialized_tournament['time'],
+            id=serialized_tournament['id']
+            )
         return tournament
 
     @classmethod
@@ -102,19 +102,19 @@ class TournamentsDAO:
             i = 1
             for match in round['matchs']:
                 matchs[f"Match {i}"] = {
-                        'player_1': {
-                            'name':
-                                players[str(match[PLAYER_1][ID])].full_name,
-                            'score':
-                                match[PLAYER_1][SCORE]
-                            },
-                        'player_2': {
-                            'name':
-                                players[str(match[PLAYER_2][ID])].full_name,
-                            'score':
-                                match[PLAYER_2][SCORE]
-                            }
+                    'player_1': {
+                        'name':
+                            players[str(match[PLAYER_1][ID])].full_name,
+                        'score':
+                            match[PLAYER_1][SCORE]
+                        },
+                    'player_2': {
+                        'name':
+                            players[str(match[PLAYER_2][ID])].full_name,
+                        'score':
+                            match[PLAYER_2][SCORE]
                         }
+                    }
                 i += 1
             rounds_data[round['name']] = matchs
         return rounds_data

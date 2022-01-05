@@ -81,10 +81,10 @@ class Player:
     @property
     def infos(self):
         infos = (
-                f"Nom: {self.full_name}\n"
-                f"Date de naissance: {self.birth}\n"
-                f"Classement: {self.rank}"
-                )
+            f"Nom: {self.full_name}\n"
+            f"Date de naissance: {self.birth}\n"
+            f"Classement: {self.rank}"
+            )
         return infos
 
     def format_data(self, *args):
@@ -102,9 +102,9 @@ class Player:
     @property
     def serialize(self):
         return {
-                "first_name": self.first_name,
-                "last_name": self.last_name,
-                "birth": self.birth,
-                "civility": self.civility,
-                "rank": self.rank,
-                }
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "birth": self.birth,
+            "civility": self.civility,
+            "rank": self.rank,
+            }

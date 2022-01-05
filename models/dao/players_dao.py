@@ -7,13 +7,13 @@ class PlayersDAO:
     @staticmethod
     def create_player(serialized_player):
         player = Player(
-                    first_name=serialized_player["first_name"],
-                    last_name=serialized_player["last_name"],
-                    birth=serialized_player["birth"],
-                    civility=serialized_player["civility"],
-                    rank=serialized_player["rank"],
-                    id=serialized_player['id']
-                )
+            first_name=serialized_player["first_name"],
+            last_name=serialized_player["last_name"],
+            birth=serialized_player["birth"],
+            civility=serialized_player["civility"],
+            rank=serialized_player["rank"],
+            id=serialized_player['id']
+            )
         return player
 
     @classmethod

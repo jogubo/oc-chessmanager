@@ -129,11 +129,11 @@ class Tournament:
         players = []
         for id, data in players_data.items():
             player = [
-                    id,
-                    data['score'],
-                    data['rank'],
-                    data['history'],
-                    ]
+                id,
+                data['score'],
+                data['rank'],
+                data['history'],
+                ]
             players.append(player)
 
         ID, SCORE, RANK = 0, 1, 2
@@ -205,12 +205,12 @@ class Tournament:
     @property
     def serialize(self):
         return {
-                'name': self.name,
-                'description': self.description,
-                'date': self.date,
-                'location': self.location,
-                'players_data': self.players_data,
-                'turns': self.turns,
-                'rounds': self.rounds,
-                'time': self.time
-                }
+            'name': self.name,
+            'description': self.description,
+            'date': self.date,
+            'location': self.location,
+            'players_data': self.players_data,
+            'turns': self.turns,
+            'rounds': self.rounds,
+            'time': self.time
+            }

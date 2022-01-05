@@ -11,21 +11,21 @@ class TournamentsCtrl:
         finished = False
         if tournament is None:
             tournament = TournamentsDAO.get_tournament_by_id(
-                    tournament_id=tournament_id,
-                    players=True
-                    )
+                tournament_id=tournament_id,
+                players=True
+                )
         elif tournament_id is None:
             tournament = tournament
         if tournament.players is not None:
             tournament.players = TournamentsDAO.get_players_of_the_tournament(
-                    tournament
-                    )
+                tournament
+                )
         if tournament.current_round > tournament.rounds:
             finished = True
         user_choice = TournamentsView.display_tournament(
-                tournament.format_data('all'),
-                finished
-                )
+            tournament.format_data('all'),
+            finished
+            )
         if user_choice == 'R':
             return 'list_tournaments', {'display': 'all'}
         elif user_choice == 'C':
@@ -45,9 +45,9 @@ class TournamentsCtrl:
     def get_next_round(cls, tournament):
         matchs = tournament.generate_versus()
         user_choice = TournamentsView.display_round(
-                matchs,
-                tournament.format_data('all')
-                )
+            matchs,
+            tournament.format_data('all')
+            )
         if user_choice == 'E':
             return 'set_score', {'tournament': tournament}
         elif user_choice == 'R':
@@ -57,9 +57,9 @@ class TournamentsCtrl:
     def list_tournaments(cls, list_ids='all', display=None):
         tournaments = TournamentsDAO.get_list_tournaments(list_ids)
         user_choice = TournamentsView.display_list(
-                TournamentsDAO.list_formatted_data(tournaments),
-                display='all'
-                )
+            TournamentsDAO.list_formatted_data(tournaments),
+            display='all'
+            )
         if isinstance(user_choice, int):
             return 'get_tournament', {'tournament_id': user_choice}
         elif user_choice == 'M':
@@ -98,24 +98,24 @@ class TournamentsCtrl:
             player_1 = tournament.players[player_1]
             player_2 = tournament.players[player_2]
             score = TournamentsView.set_score_match(
-                    tournament.current_round,
-                    (player_1.full_name, player_2.full_name)
-                    )
+                tournament.current_round,
+                (player_1.full_name, player_2.full_name)
+                )
             player_1.score += score[PLAYER_1]
             players_data = tournament.players_data
             players_data[str(player_1.id)]['history'].append(str(player_2.id))
             player_2.score += score[PLAYER_2]
             players_data[str(player_2.id)]['history'].append(str(player_1.id))
             match = (
-                    [player_1.id, score[PLAYER_1]],
-                    [player_2.id, score[PLAYER_2]]
-                    )
+                [player_1.id, score[PLAYER_1]],
+                [player_2.id, score[PLAYER_2]]
+                )
             matchs_results.append(match)
         round = {
-                'name': round_name,
-                'date': '',
-                'matchs': matchs_results
-                }
+            'name': round_name,
+            'date': '',
+            'matchs': matchs_results
+            }
         rounds = tournament.turns
         rounds.append(round)
         tournament.turns = rounds
@@ -132,10 +132,10 @@ class TournamentsCtrl:
             player = PlayersDAO.get_player_by_id(search_player)
             if player.id not in players_data:
                 players_data[player.id] = {
-                        'score': 0.0,
-                        'rank': player.rank,
-                        'history': []
-                        }
+                    'score': 0.0,
+                    'rank': player.rank,
+                    'history': []
+                    }
                 total_players -= 1
         new_tournament_form['players_data'] = players_data
         new_tournament_form['turns'] = []

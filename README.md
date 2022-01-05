@@ -1,6 +1,6 @@
 ### oc-chessmanager
 
-## Install ChessManeger
+## Install ChessManager
 
 Clone this repository:
 ```

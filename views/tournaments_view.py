@@ -218,11 +218,11 @@ class TournamentsView:
         '''
         cls.title = "Création d'un nouveau tournoi"
         tournament = {
-                "name": cls.set_name(),
-                "description": cls.set_description(),
-                "date": cls.set_date(),
-                "location": cls.set_location(),
-                "time": cls.set_time(),
-                "nb_players": cls.set_nb_players(),
-                }
+            "name": cls.set_name(),
+            "description": cls.set_description(),
+            "date": cls.set_date(),
+            "location": cls.set_location(),
+            "time": cls.set_time(),
+            "nb_players": cls.set_nb_players(),
+            }
         return tournament

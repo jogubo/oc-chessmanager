@@ -153,11 +153,11 @@ class PlayersView:
         valid_form = False
         while valid_form is False:
             player = {
-                    "first_name": cls.set_first_name(),
-                    "last_name": cls.set_last_name(),
-                    "birth": cls.set_birth(),
-                    "civility": cls.set_civility()
-                    }
+                "first_name": cls.set_first_name(),
+                "last_name": cls.set_last_name(),
+                "birth": cls.set_birth(),
+                "civility": cls.set_civility()
+                }
             infos = f"{player['first_name']} {player['last_name']} " \
                     f"[{player['civility']}] ({player['birth']})\n"
 
