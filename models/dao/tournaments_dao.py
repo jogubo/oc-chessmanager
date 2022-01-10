@@ -26,7 +26,7 @@ class TournamentsDAO:
             rounds=serialized_tournament['rounds'],
             time=serialized_tournament['time'],
             id=serialized_tournament['id']
-            )
+        )
         return tournament
 
     @classmethod
@@ -102,19 +102,21 @@ class TournamentsDAO:
             i = 1
             for match in round['matchs']:
                 matchs[f"Match {i}"] = {
-                    'player_1': {
+                    'player_1':
+                    {
                         'name':
                             players[str(match[PLAYER_1][ID])].full_name,
                         'score':
                             match[PLAYER_1][SCORE]
-                        },
-                    'player_2': {
+                    },
+                    'player_2':
+                    {
                         'name':
                             players[str(match[PLAYER_2][ID])].full_name,
                         'score':
                             match[PLAYER_2][SCORE]
-                        }
                     }
+                }
                 i += 1
             rounds_data[round['name']] = matchs
         return rounds_data

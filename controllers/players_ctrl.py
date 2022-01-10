@@ -31,9 +31,9 @@ class PlayersCtrl:
         else:
             players = PlayersDAO.get_list_players(list_ids)
         user_choice = PlayersView.list(
-                PlayersDAO.list_formatted_data(players),
-                display
-                )
+            PlayersDAO.list_formatted_data(players),
+            display
+        )
         if isinstance(user_choice, int):
             return 'get_player', {'player_id': user_choice}
         elif user_choice == 'M':
@@ -68,11 +68,11 @@ class PlayersCtrl:
     def create_new():
         form = PlayersView.create_new_player()
         player = Player(
-                form['first_name'],
-                form['last_name'],
-                form['birth'],
-                form['civility']
-                )
+            form['first_name'],
+            form['last_name'],
+            form['birth'],
+            form['civility']
+        )
         serialized_players = []
         serialized_players.append(player.serialize)
         Database.add('players', serialized_players)

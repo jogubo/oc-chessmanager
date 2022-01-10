@@ -1,17 +1,17 @@
 class Tournament:
     def __init__(
-            self,
-            name,
-            description,
-            location,
-            players_data,
-            date,
-            turns=[],
-            rounds=4,
-            time=None,
-            id=None,
-            players=None
-            ):
+        self,
+        name,
+        description,
+        location,
+        players_data,
+        date,
+        turns=[],
+        rounds=4,
+        time=None,
+        id=None,
+        players=None
+    ):
         self._name = name
         self._location = location
         self._players_data = players_data
@@ -133,18 +133,18 @@ class Tournament:
                 data['score'],
                 data['rank'],
                 data['history'],
-                ]
+            ]
             players.append(player)
 
         ID, SCORE, RANK = 0, 1, 2
         players.sort(key=lambda x: x[SCORE], reverse=True)
         for i in range(0, len(players)):
-            for j in range(0, len(players)-i-1):
-                if (players[j][SCORE] == players[j+1][SCORE]):
-                    if (players[j][RANK] > players[j+1][RANK]):
+            for j in range(0, len(players) - i - 1):
+                if (players[j][SCORE] == players[j + 1][SCORE]):
+                    if (players[j][RANK] > players[j + 1][RANK]):
                         temp = players[j]
-                        players[j] = players[j+1]
-                        players[j+1] = temp
+                        players[j] = players[j + 1]
+                        players[j + 1] = temp
         sorted_players = {}
         for player in players:
             sorted_players[player[ID]] = self.players[player[ID]]
@@ -158,7 +158,7 @@ class Tournament:
         ID, HISTORY = 0, 3
         if len(players[ID][HISTORY]) == 0:
             for i in range(median):
-                versus.append((players[i][0], players[i+median][0]))
+                versus.append((players[i][0], players[i + median][0]))
         else:
             i = 1
             while len(players) > 0:
@@ -213,4 +213,4 @@ class Tournament:
             'turns': self.turns,
             'rounds': self.rounds,
             'time': self.time
-            }
+        }

@@ -13,7 +13,7 @@ class PlayersDAO:
             civility=serialized_player["civility"],
             rank=serialized_player["rank"],
             id=serialized_player['id']
-            )
+        )
         return player
 
     @classmethod
@@ -57,9 +57,9 @@ class PlayersDAO:
 
     @staticmethod
     def list_formatted_data(
-            players,
-            force=False
-            ):
+        players,
+        force=False
+    ):
         single_object = False
         if not isinstance(players, list):
             players = [players]

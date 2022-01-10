@@ -224,5 +224,5 @@ class TournamentsView:
             "location": cls.set_location(),
             "time": cls.set_time(),
             "nb_players": cls.set_nb_players(),
-            }
+        }
         return tournament

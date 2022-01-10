@@ -157,7 +157,7 @@ class PlayersView:
                 "last_name": cls.set_last_name(),
                 "birth": cls.set_birth(),
                 "civility": cls.set_civility()
-                }
+            }
             infos = f"{player['first_name']} {player['last_name']} " \
                     f"[{player['civility']}] ({player['birth']})\n"
 

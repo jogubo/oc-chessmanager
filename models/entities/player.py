@@ -1,13 +1,13 @@
 class Player:
     def __init__(
-            self,
-            first_name,
-            last_name,
-            birth,
-            civility,
-            rank=None,
-            id=None
-            ):
+        self,
+        first_name,
+        last_name,
+        birth,
+        civility,
+        rank=None,
+        id=None
+    ):
         self._first_name = first_name
         self._last_name = last_name
         self._birth = birth
@@ -84,7 +84,7 @@ class Player:
             f"Nom: {self.full_name}\n"
             f"Date de naissance: {self.birth}\n"
             f"Classement: {self.rank}"
-            )
+        )
         return infos
 
     def format_data(self, *args):
@@ -107,4 +107,4 @@ class Player:
             "birth": self.birth,
             "civility": self.civility,
             "rank": self.rank,
-            }
+        }
