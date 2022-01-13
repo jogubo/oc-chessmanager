@@ -8,6 +8,16 @@ class TournamentsCtrl:
 
     @classmethod
     def get_tournament(cls, tournament_id=None, tournament=None):
+        """
+        Get a tournament.
+
+            Parameters:
+                tournament_id (int): tournament id
+                tournament (object): tournament object
+
+            Returns:
+                next_controller, next_parameters
+        """
         finished = False
         if tournament is None:
             tournament = TournamentsDAO.get_tournament_by_id(

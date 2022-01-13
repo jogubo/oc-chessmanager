@@ -121,10 +121,9 @@ class Tournament:
         self._id = id
 
     def sort_players(self):
-        '''
-        Player's data is list:
-            [player_id, player_score, player_rank]
-        '''
+        """
+        Sort players according to their score.
+        """
         players_data = self.players_data
         players = []
         for id, data in players_data.items():
@@ -135,9 +134,11 @@ class Tournament:
                 data['history'],
             ]
             players.append(player)
-
+        # players_data is a list [ID, SCORE, RANK, HISTORY]
         ID, SCORE, RANK = 0, 1, 2
+        # Sort by score
         players.sort(key=lambda x: x[SCORE], reverse=True)
+        # Sort by rank
         for i in range(0, len(players)):
             for j in range(0, len(players) - i - 1):
                 if (players[j][SCORE] == players[j + 1][SCORE]):
@@ -152,18 +153,29 @@ class Tournament:
         return players
 
     def generate_versus(self):
+        """
+        Generate the list of the matches.
+        """
         players = self.sort_players()
         median = int(len(players) / 2)
         versus = []
+        # players_data is a list [ID, SCORE, RANK, HISTORY]
         ID, HISTORY = 0, 3
+        # List example [1, 2, 3, 4, 5, 6, 7, 8]
+        # First round
+        # Sort example [(1, 5), (2, 6), (3, 7), (4, 8)}
         if len(players[ID][HISTORY]) == 0:
             for i in range(median):
                 versus.append((players[i][0], players[i + median][0]))
+        # Other rounds
+        # Sort example [(1, 2), (3, 4), (5, 6), (7, 8)]
         else:
             i = 1
             while len(players) > 0:
                 try:
                     player_1, player_2 = players[ID], players[i]
+                    # Check that two players have not already played
+                    # against each other
                     if player_2[ID] in player_1[HISTORY]:
                         i += 1
                     else:
@@ -179,10 +191,23 @@ class Tournament:
         return versus
 
     def update_players_data(self):
+        """
+        Update the data of a player from the object values.
+        """
         for id, player_data in self.players_data.items():
             player_data['score'] = self.players[id].score
 
     def format_data(self, *args):
+        """
+        Format data for the view.
+
+            Parameters:
+                *args (str): 'id', 'name', 'description', 'rounds'
+                'time', 'players', 'all'
+
+            Returns:
+                tournament_infos (dict)
+        """
         tournament_infos = {}
         if 'id' in args or 'all' in args:
             tournament_infos['id'] = self.id

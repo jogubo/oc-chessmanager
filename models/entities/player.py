@@ -88,6 +88,15 @@ class Player:
         return infos
 
     def format_data(self, *args):
+        """
+        Format data for the view.
+
+            Parameters:
+                *args (str): 'id', 'name', 'rank', 'score', 'all'
+
+            Returns:
+                player_infos (dict)
+        """
         player_infos = {}
         if 'id' in args or 'all' in args:
             player_infos['id'] = self.id

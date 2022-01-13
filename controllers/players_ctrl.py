@@ -8,6 +8,15 @@ class PlayersCtrl:
 
     @classmethod
     def get_player(cls, player_id):
+        """
+        Get a player.
+
+            Parameters:
+                player_id (int): tournament id
+
+            Returns:
+                next_controller, next_parameters
+        """
         player = PlayersDAO.get_player_by_id(player_id)
         user_choice = PlayersView.display_player(player.infos)
         if user_choice == 'M':
