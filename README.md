@@ -28,8 +28,8 @@ Then follow the instructions of the program
 
 ## Flake8
 # View report
-The report  is available via  an html file:
-flake-report/index.html
+The report  is available via  an html file
+`flake-report/index.html`
 
 # Generate new flake8 report
 ```
