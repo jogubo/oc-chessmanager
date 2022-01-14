@@ -1,7 +1,6 @@
 .venv/
 .vscode/
 __pycache__/
-flake-report/
 sequence.md
 test.py
 db.json
