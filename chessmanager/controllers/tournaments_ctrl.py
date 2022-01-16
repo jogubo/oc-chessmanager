@@ -141,6 +141,8 @@ class TournamentsCtrl:
             search_player = PlayersCtrl.search_by_name()
             player = PlayersDAO.get_player_by_id(search_player)
             if player.id not in players_data:
+                if player.rank == '':
+                    player.rank = 1000
                 players_data[player.id] = {
                     'score': 0.0,
                     'rank': player.rank,
